@@ -33,7 +33,7 @@ LOG_PATTERNS = {
     "得到经验": "processExpSP",
 }
 
-MESSAGES = {
+REGEX_PATTERNS = {
     "upgradeFaction": "Faction with ID %d was upgraded by the master role %d. Money: %d, Level: %d",
     "deleteRoleFromFaction": "(Type: %s) Role with ID %d was deleted from Faction ID %d. Role: %d",
     "joinFaction": "(Type: %s) The Role ID %d joined the Faction ID %d",
@@ -70,7 +70,7 @@ MESSAGES = {
     "roleLogout": "The account ID %d logged out with the role ID %d",
     "roleLogin": "The account ID %d logged in with the role ID %d",
     "dropItem": "The Role ID %d discarded %d unit(s) of item ID %d",
-    "pickupMoney": "Role %s picked up %d money",
+    "pickupMoney":  r"(\d+).*?(\d+)/(\d+)",
     "discardMoney": "The Role ID %d discarded %d money",
     "buyItem": "The Role ID %d bought %d unit(s) of the item ID: %d from a NPC",
     "sellItem": "The Role ID %d sold %d unit(s) of the item ID: %d to a NPC",
@@ -85,4 +85,5 @@ MESSAGES = {
     "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",
     "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
     "gShopTrade": "User ID %d performed a trade with the following details: Magic Number: %d, Order ID: %d, Item ID: %d, Expire: %d, Item Count: %d, Cash Needed: %d, Cash Left: %d, GUID 1: %d, GUID 2: %d",
+    "processExpSP": r"(\d+)(?=经验)|(\d+)(?=灵气)|(\d+)(?=\s*$)"
 }
