@@ -26,20 +26,22 @@ class LogHandler:
                 print(f"Pattern matched: {pattern}")
                 function = getattr(self, func_name, None)
                 if callable(function):
-                    function(log_line=log_line, pattern=pattern)
+                    function(log_line=log_line, function=func_name)
                 else:
                     print(f"Method {func_name} not found or is not callable")
                 return
         print("Pattern doesn't match any method")
 
-    def processExpSP(self, log_line: str, pattern: str):
-        regex = getattr(self, pattern)
+    def processExpSP(self, log_line: str, function: str):
+        regex = self.regex_patterns[function]
         matches = self.regexMatch(regex, log_line)
-        print("Processing EXP/SP gain...")
-        print(f"Matches: {matches}")
+        roleid = matches[0][0]
+        exp = matches[0][1]
+        sp = matches[0][2]
+        print(f"Role ID: {roleid} received {exp} EXP and {sp} SP at {self.now}")
 
-    def processPickupMoney(self, log_line: str, pattern: str):
-        regex = getattr(self, pattern)
+    def processPickupMoney(self, log_line: str, function: str):
+        regex = self.regex_patterns[function]
         matches = self.regexMatch(regex, log_line)
         roleid = matches[0][0]
         money = matches[1][1]
@@ -47,10 +49,10 @@ class LogHandler:
         return self.now, roleid, money
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    if len(sys.argv) >= 1:
         log_handler = LogHandler()
-        # log_line = "2024-10-06 21:52:43 pwtestes.com gamed: info : 用户1024得到经验 27/6"
-        log_line = sys.argv[1]
+        log_line = "2024-10-06 21:52:43 pwtestes.com gamed: info : 用户1024得到经验 27/6"
+        #log_line = sys.argv[1]
         log_handler.processLogLine(log_line=log_line)
     else:
         print("Nothing done, no log line provided.")
