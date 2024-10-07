@@ -1,23 +1,41 @@
 import os
 from config import LOG_PATTERNS
 import sys
+import re
 
 class LogHandler:
 
     def __init__(self) -> None:
         self.log_patterns = LOG_PATTERNS
 
-    def processLogLine(self, log_line):
+    def processLogLine(self, log_line: str):
         print(f"Processing log line: {log_line}")
         self.getMethod(log_line)
         return None
     
-    def getMethod(self, log_line):
-        for pattern in self.log_patterns.keys():
+    def regexMatch(self, regex_expression: str, log_line: str):
+        matches = re.findall(regex_expression, log_line)
+        return matches
+
+    def getMethod(self, log_line: str):
+        for pattern, func_name in self.log_patterns.items():
             if pattern in log_line:
                 print(f"Pattern matched: {pattern}")
-                return self.log_patterns[pattern]
-        return print("Pattern doesn't match any method")
+                function = getattr(self, func_name, None)
+                if callable(function):
+                    function(log_line)
+                else:
+                    print(f"Method {func_name} not found or is not callable")
+                return
+        print("Pattern doesn't match any method")
+    
+    def processExpSP(self, log_line: str):
+        regex = r"(\d+)(?=拣起金钱)|(\d+)(?=\s*$)"
+        matches = self.regexMatch(regex, log_line)
+        print("Processing EXP/SP gain...")
+        print(f"Matches: {matches}")
+
+        return None
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
