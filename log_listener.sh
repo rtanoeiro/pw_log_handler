@@ -1,13 +1,13 @@
-$log_script = "log_listerner.py"
-$log_file = "world2.log"
+#!/bin/bash
+
+log_script="log_listener.py"
+log_file="world2.chat"
 
 process_log_line() {
-    local log_line=$1
-    python "${logify_script}" "${log_line}" 1>/dev/null 2>> "${script_dir}/../logs/errors.txt"
+    local log_line="$1"
+    python "${log_script}" "${log_line}" 2>>errors.log
 }
 
-
-stdbuf -oL tail -f -n0 world2.chat | while read line; do
-    echo "$line"
-    python3 "$log_script" "$line" 1>run.log 2>run.err
+stdbuf -oL tail -f -n0 $log_file | while read line; do
+    process_log_line "$line"
 done
