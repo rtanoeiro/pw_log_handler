@@ -5,9 +5,9 @@ log_file="world2.chat"
 
 process_log_line() {
     local log_line="$1"
-    python "${log_script}" "${log_line}" 2>>errors.log
+    python "${log_script}" "${log_line}" 2>>run.log
 }
 
-stdbuf -oL tail -f -n0 $log_file | while read line; do
+stdbuf -oL tail -f -n0 $log_file | while read -r line; do
     process_log_line "$line"
 done
