@@ -47,6 +47,14 @@ class LogHandler:
         money = matches[1][1]
         print(f"Role ID: {roleid} picked up {money} money at {self.now}")
         return self.now, roleid, money
+    
+    def processTask(self, log_line: str, function: str):
+        regex = self.regex_patterns[function]
+        matches = self.regexMatch(regex, log_line)
+        roleid = matches[0][0]
+        task = matches[0][1]
+        print(f"Role ID: {roleid} completed the task {task} at {self.now}")
+        return self.now, roleid, task
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
