@@ -11,4 +11,4 @@ Each log file is responsible for different logging capabilities. Below is a summ
 
 The idea of this project is to monitor the log file for anything interesting we want to check from players. For example, checking if the player is mining to many minerals in a short amount of time. Log kills into a database, check how money was spent by the player, which items it has crafted.
 
-All data will be logged into a Database for easier querying and possibly usage in a Website.
+All data will be logged into a Database for easier querying and possibly usage in a Website or for reporting.
