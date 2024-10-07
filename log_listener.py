@@ -45,7 +45,7 @@ class LogHandler:
         matches = self.regexMatch(regex, log_line)
         roleid = matches[0][0]
         money = matches[1][1]
-        print(f"Role ID: {roleid} picked up {money} money at {timestamp}")
+        print(f"Role ID: {roleid} picked up {money} money at {self.now}")
         return self.now, roleid, money
 
 if __name__ == "__main__":
