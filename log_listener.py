@@ -1,5 +1,5 @@
 import os
-from config import LOG_PATTERNS
+from config import LOG_PATTERNS, REGEX_PATTERNS
 import sys
 import re
 import datetime
@@ -8,6 +8,7 @@ class LogHandler:
 
     def __init__(self) -> None:
         self.log_patterns = LOG_PATTERNS
+        self.regex_patterns = REGEX_PATTERNS
         self.now = timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def processLogLine(self, log_line: str):
@@ -25,20 +26,20 @@ class LogHandler:
                 print(f"Pattern matched: {pattern}")
                 function = getattr(self, func_name, None)
                 if callable(function):
-                    function(log_line)
+                    function(log_line=log_line, pattern=pattern)
                 else:
                     print(f"Method {func_name} not found or is not callable")
                 return
         print("Pattern doesn't match any method")
 
-    def processExpSP(self, log_line: str):
-        regex = r"(\d+)(?=经验)|(\d+)(?=灵气)|(\d+)(?=\s*$)"
+    def processExpSP(self, log_line: str, pattern: str):
+        regex = getattr(self, pattern)
         matches = self.regexMatch(regex, log_line)
         print("Processing EXP/SP gain...")
         print(f"Matches: {matches}")
 
-    def processPickupMoney(self, log_line: str):
-        regex = r"(\d+)(?=拣起金钱)|(\d+)(?=\s*$)"
+    def processPickupMoney(self, log_line: str, pattern: str):
+        regex = getattr(self, pattern)
         matches = self.regexMatch(regex, log_line)
         roleid = matches[0][0]
         money = matches[1][1]
@@ -48,6 +49,7 @@ class LogHandler:
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         log_handler = LogHandler()
+        # log_line = "2024-10-06 21:52:43 pwtestes.com gamed: info : 用户1024得到经验 27/6"
         log_line = sys.argv[1]
         log_handler.processLogLine(log_line=log_line)
     else:
