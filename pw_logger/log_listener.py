@@ -3,6 +3,7 @@
 import datetime
 import re
 import sys
+from typing import Any
 
 from pw_logger.config import LOG_PATTERNS, REGEX_PATTERNS
 
@@ -19,15 +20,15 @@ class LogHandler:
         self.regex_patterns = REGEX_PATTERNS
         self.now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def process_log_line(self, log_line: str):
+    def process_log_line(self, log_line: str) -> tuple[Any] | None:
         """
         This function gets the correct method to process the log line.
 
         Arguments:
             log_line -- Log Line received by the log_listener.sh script
         """
-        self.get_method(log_line)
-        return None
+        results = self.get_method(log_line)
+        return results
 
     def regex_match(self, regex_expression: str, log_line: str):
         """
@@ -43,7 +44,7 @@ class LogHandler:
         matches = re.findall(regex_expression, log_line)
         return matches
 
-    def get_method(self, log_line: str):
+    def get_method(self, log_line: str) -> tuple[Any] | None:
         """
         This function gets the correct method based in the log_patterns dictionary.
         Each key in the dictionary contains the function name.
@@ -55,15 +56,12 @@ class LogHandler:
         """
         for pattern, func_name in self.log_patterns.items():
             if pattern in log_line:
-                function = getattr(self, func_name, None)
-                if callable(function):
-                    function(  # pylint: disable=not-callable
-                        log_line=log_line, function=func_name
-                    )
-                else:
-                    print(f"Method {func_name} not found or is not callable")
-                return None
+                method = getattr(self, func_name, None)
+                if method:
+                    return method(log_line, func_name)  # pylint: disable=not-callable
+
         print("Pattern doesn't match any method")
+        return None
 
     def process_exp_sp(self, log_line: str, function: str):
         """
@@ -77,7 +75,7 @@ class LogHandler:
         roleid = matches[0][0]
         exp = matches[0][1]
         sp = matches[0][2]
-        print(f"Role ID: {roleid} received {exp} EXP and {sp} SP at {self.now}")
+        print(f"Role ID {roleid} received {exp} EXP and {sp} SP at {self.now}")
 
         return self.now, roleid, exp, sp
 
