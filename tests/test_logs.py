@@ -18,6 +18,9 @@ class TestLogs(unittest.TestCase):
             "2024-09-21 08:23:24 pwtestes.com gamed: info : 用户1028拣起金钱9"
         )
         self.receive_task = "2024-09-23 08:29:26 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6436:type=1:msg=CheckDeliverTask"
+        self.give_up_task = "2024-09-24 08:03:33 pwtestes.com gamed: notice : formatlog:task:roleid=1120:taskid=33582:type=1:msg=GiveUpTask"
+        self.receive_xp_task = "2024-09-24 08:01:17 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6437:type=1:msg=DeliverByAwardData: success = 1, gold = 8100, exp = 13500, sp = 3000, reputation = 2"
+        self.receive_item_tasl = "2024-09-24 08:01:17 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6437:type=1:msg=DeliverItem: Item id = 3366, Count = 1"
         self.handler = LogHandler()
 
     def test_exp_sp_log(self):
@@ -39,4 +42,27 @@ class TestLogs(unittest.TestCase):
         Test if the receive task log line is correctly processed
         """
         results = self.handler.process_log_line(self.receive_task)
-        self.assertEqual(results, (self.handler.now, "1088", "6436"))
+        self.assertEqual(results, (self.handler.now, "1088", "6436", "receive"))
+
+    def test_task_give_up(self):
+        """
+        Test if the give up task log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.give_up_task)
+        self.assertEqual(results, (self.handler.now, "1120", "33582", "give_up"))
+
+    def test_receive_xp_task(self):
+        """
+        Test if the receive xp task log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.receive_xp_task)
+        self.assertEqual(
+            results, (self.handler.now, "1088", "6437", "8100", "13500", "3000", "2")
+        )
+
+    def test_receive_item_task(self):
+        """
+        Test if the receive item task log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.receive_item_tasl)
+        self.assertEqual(results, (self.handler.now, "1088", "6437", "3366", "1"))
