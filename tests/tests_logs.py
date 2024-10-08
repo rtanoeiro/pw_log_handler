@@ -23,7 +23,5 @@ class TestLogs(unittest.TestCase):
         """
         Test if the exp_sp log line is correctly processed
         """
-        self.assertEqual(
-            self.handler.process_log_line(self.exp_sp_log),
-            (self.handler.now, "1024", "27", "6"),
-        )
+        results = self.handler.process_log_line(self.exp_sp_log)
+        self.assertEqual(results, (self.handler.now, "1024", "27", "6"))
