@@ -93,7 +93,7 @@ class LogHandler:
         print(f"Role ID: {roleid} picked up {money} money at {self.now}")
         return self.now, roleid, money
 
-    def process_task(self, log_line: str, function: str):
+    def process_task_receive(self, log_line: str, function: str):
         """
         Function called when the player interacts with tasks
         Arguments:
@@ -102,7 +102,10 @@ class LogHandler:
         """
         regex = self.regex_patterns[function]
         matches = self.regex_match(regex, log_line)
-        return None
+        roleid = matches[0][0]
+        taskid = matches[0][1]
+        print(f"Role ID {roleid} received task ID {taskid} at {self.now}")
+        return self.now, roleid, taskid
 
 
 if __name__ == "__main__":
