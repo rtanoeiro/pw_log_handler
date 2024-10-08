@@ -57,7 +57,9 @@ class LogHandler:
             if pattern in log_line:
                 function = getattr(self, func_name, None)
                 if callable(function):
-                    function(log_line=log_line, function=func_name)
+                    function(  # pylint: disable=not-callable
+                        log_line=log_line, function=func_name
+                    )
                 else:
                     print(f"Method {func_name} not found or is not callable")
                 return None
