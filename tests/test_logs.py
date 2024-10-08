@@ -33,3 +33,10 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.pickup_money_log)
         self.assertEqual(results, (self.handler.now, "1028", "9"))
+
+    def test_receive_task(self):
+        """
+        Test if the receive task log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.receive_task)
+        self.assertEqual(results, (self.handler.now, "1088", "6436"))
