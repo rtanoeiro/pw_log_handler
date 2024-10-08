@@ -2,6 +2,7 @@
 
 import unittest
 from pw_logger.log_listener import LogHandler
+import pytest
 
 
 class TestLogs(unittest.TestCase):
@@ -13,7 +14,7 @@ class TestLogs(unittest.TestCase):
         self.exp_sp_log = (
             "2024-10-06 21:52:43 pwtestes.com gamed: info : 用户1024得到经验 27/6"
         )
-        self.test_pickup_money_log = (
+        self.pickup_money_log = (
             "2024-09-21 08:23:24 pwtestes.com gamed: info : 用户1028拣起金钱9"
         )
         self.receive_task = "2024-09-23 08:29:26 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6436:type=1:msg=CheckDeliverTask"
@@ -25,3 +26,10 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.exp_sp_log)
         self.assertEqual(results, (self.handler.now, "1024", "27", "6"))
+
+    def test_pickup_money_log(self):
+        """
+        Test if the pickup money log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.pickup_money_log)
+        self.assertEqual(results, (self.handler.now, "1028", "9"))
