@@ -5,7 +5,7 @@ import re
 import sys
 from typing import Any
 
-from pw_logger.config import LOG_PATTERNS, REGEX_PATTERNS
+from pw_logger.config import LOG_PATTERNS, REGEX_PATTERNS, TASK_PATTERNS
 
 
 class LogHandler:
@@ -18,6 +18,7 @@ class LogHandler:
     def __init__(self) -> None:
         self.log_patterns = LOG_PATTERNS
         self.regex_patterns = REGEX_PATTERNS
+        self.task_patterns = TASK_PATTERNS
         self.now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def process_log_line(self, log_line: str) -> tuple[Any] | None:
@@ -93,7 +94,7 @@ class LogHandler:
         print(f"Role ID: {roleid} picked up {money} money at {self.now}")
         return self.now, roleid, money
 
-    def process_task_receive(self, log_line: str, function: str):
+    def process_task(self, log_line: str, function: str):
         """
         Function called when the player interacts with tasks
         Arguments:
@@ -104,8 +105,57 @@ class LogHandler:
         matches = self.regex_match(regex, log_line)
         roleid = matches[0][0]
         taskid = matches[0][1]
-        print(f"Role ID {roleid} received task ID {taskid} at {self.now}")
-        return self.now, roleid, taskid
+        if "GiveUpTask" in log_line:
+            print(f"Role ID {roleid} gave up task ID {taskid} at {self.now}")
+            return_matches = self.now, roleid, taskid, "give_up"
+            return return_matches
+        elif "CheckDeliverTask" in log_line:
+            print(f"Role ID {roleid} received task ID {taskid} at {self.now}")
+            return_matches = self.now, roleid, taskid, "receive"
+            return return_matches
+        elif "DeliverItem" in log_line:
+            return_matches = self.process_task_give_item(log_line, roleid, taskid)
+            return return_matches
+        elif "DeliverByAwardData" in log_line:
+            return_matches = self.process_task_receive_reward(log_line, roleid, taskid)
+            return return_matches
+
+    def process_task_give_item(self, log_line: str, roleid: str, taskid: str):
+        """
+        Function called when the player gives up on a task
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.task_patterns["DeliverItem"]
+        matches = self.regex_match(regex, log_line)
+        print(f"Matches: {matches}")
+        itemid = matches[0][0]
+        item_count = matches[0][1]
+        print(
+            f"Role ID {roleid} received {item_count} units of item ID {itemid} from task ID {taskid}"
+        )
+        return self.now, roleid, taskid, itemid, item_count
+
+    def process_task_receive_reward(self, log_line: str, roleid: str, taskid: str):
+        """
+        Function called when the player receives an item via task
+        Arguments:
+            log_line -- Log line to be processed
+            roleid -- Role that received item
+            taskid -- Task that gave item
+        """
+        regex = self.task_patterns["DeliverByAwardData"]
+        matches = self.regex_match(regex, log_line)
+        print(f"Matches: {matches}")
+        gold = matches[0][0]
+        exp = matches[0][1]
+        sp = matches[0][2]
+        reputation = matches[0][3]
+        print(
+            f"Role ID {roleid} completed the task ID {taskid} and received as reward: gold = {gold}, exp = {exp}, sp = {sp}, reputation = {reputation}"
+        )
+        return self.now, roleid, taskid, gold, exp, sp, reputation
 
 
 if __name__ == "__main__":

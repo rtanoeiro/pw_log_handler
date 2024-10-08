@@ -6,7 +6,7 @@ LOG_PATTERNS = {
     "formatlog:rolelogin": "processRoleLogin",
     "formatlog:rolelogout": "processRoleLogout",
     "formatlog:trade": "processTrade",
-    "msg=CheckDeliverTask": "process_task_receive",
+    "formatlog:task": "process_task",
     "formatlog:die": "processDie",
     "formatlog:faction": "processFactionActions",
     "formatlog:gshop_trade": "processGShopTrade",
@@ -31,6 +31,11 @@ LOG_PATTERNS = {
     "还原了宠物蛋": "processPetEggRestore",
     "组队拣起用户": "pickupTeamMoney",
     "得到经验": "process_exp_sp",
+}
+
+TASK_PATTERNS = {
+    "DeliverItem": r"Item id\s*=\s*(\d+),\s*Count\s*=\s*(\d+)",
+    "DeliverByAwardData": r"gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
 }
 
 REGEX_PATTERNS = {
@@ -79,8 +84,7 @@ REGEX_PATTERNS = {
     "dropEquipment": "The Role ID %d discarded his equipment of ID %d",
     "pickupItem": "The Role ID %d picked up %d unit(s) of item %d (discarded by role ID %d)",
     "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
-    "process_task_receive": r"roleid=(\d+):taskid=(\d+)",
-    "giveUpTask": "The Role ID %d gave up the task ID %d",
+    "process_task": r"roleid=(\d+):taskid=(\d+)",
     "receiveItemFromTask": "The Role ID %d received %d unit(s) of the item ID %d from the task ID %d",
     "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",
     "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
