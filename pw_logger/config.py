@@ -70,7 +70,7 @@ REGEX_PATTERNS = {
     "roleLogout": "The account ID %d logged out with the role ID %d",
     "roleLogin": "The account ID %d logged in with the role ID %d",
     "dropItem": "The Role ID %d discarded %d unit(s) of item ID %d",
-    "pickupMoney": r"(\d+)(?=经验)|(\d+)(?=灵气)|(\d+)(?=\s*$)",
+    "process_pick_up_money": r"用户(\d+)拣起金钱(\d+)",
     "discardMoney": "The Role ID %d discarded %d money",
     "buyItem": "The Role ID %d bought %d unit(s) of the item ID: %d from a NPC",
     "sellItem": "The Role ID %d sold %d unit(s) of the item ID: %d to a NPC",
