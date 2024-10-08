@@ -85,5 +85,5 @@ REGEX_PATTERNS = {
     "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",
     "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
     "gShopTrade": "User ID %d performed a trade with the following details: Magic Number: %d, Order ID: %d, Item ID: %d, Expire: %d, Item Count: %d, Cash Needed: %d, Cash Left: %d, GUID 1: %d, GUID 2: %d",
-    "processExpSP": r"(\d+).*?(\d+)/(\d+)",
+    "process_exp_sp": r"用户(\d+)得到经验 (\d+)/(\d+)",
 }
