@@ -1,7 +1,7 @@
 """This script is run to perform all tests from log lines"""
 
 import unittest
-from log_listener import LogHandler
+from pw_logger.log_listener import LogHandler
 
 
 class TestLogs(unittest.TestCase):

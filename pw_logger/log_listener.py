@@ -4,7 +4,7 @@ import datetime
 import re
 import sys
 
-from config import LOG_PATTERNS, REGEX_PATTERNS
+from pw_logger.config import LOG_PATTERNS, REGEX_PATTERNS
 
 
 class LogHandler:
