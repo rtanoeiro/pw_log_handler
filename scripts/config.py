@@ -1,3 +1,5 @@
+"""This module contains configurations such as function names and regex patterns for the log handler"""
+
 LOG_PATTERNS = {
     "GM:": "processGMActions",
     "chat :": "processChat",
@@ -34,8 +36,8 @@ LOG_PATTERNS = {
 }
 
 TASK_PATTERNS = {
-    "DeliverItem": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?Item id\s*=\s*(\d+),\s*Count\s*=\s*(\d+)",
-    "DeliverByAwardData": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
+    "DeliverItem": r"Item id\s*=\s*(\d+),\s*Count\s*=\s*(\d+)",
+    "DeliverByAwardData": r"gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
 }
 
 REGEX_PATTERNS = {
@@ -52,21 +54,21 @@ REGEX_PATTERNS = {
     "moveToPlayer": "GM %d moved to player %d at position (%f, %f, %f).",
     "movePlayer": "GM %d moved player %d to position (%f, %f, %f).",
     "command": "The GM with Role ID %d executed internal command %d.",
-    "process_mine": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?用户(\d+)采集得到(\d+)个(\d+)",
-    "process_create_faction": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?roleid=(\d+):factionid=(\d+)",
-    "process_upgrade_faction": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?factionid=(\d+):master=(\d+):money=(\d+):level=(\d+)",
+    "process_mine": r"用户(\d+)采集得到(\d+)个(\d+)",
+    "process_create_faction": r"roleid=(\d+):factionid=(\d+)",
+    "process_upgrade_faction": r"factionid=(\d+):master=(\d+):money=(\d+):level=(\d+)",
     "deleteFaction": "(Action type: %s) An attempt to delete the faction ID %d was detected!",
     "joinFaction": "(Type: %s) The Role ID %d joined the Faction ID %d",
     "promoteRoleInFaction": "(Type: %s) The Role ID %d was promoted by his superior (ID %d) in Faction ID %d. New position: %d",
     "deleteRoleFromFaction": "(Type: %s) Role with ID %d was deleted from Faction ID %d. Role: %d",
     "leaveFaction": "(Type: %s) The Role ID %d just left the Faction ID %d, his position was: %d",
     "pickupTeamMoney": "Role ID %d picked up money (%d) dropped by Role ID %d they both were in a Party.",
-    "process_create_party": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?用户(\d+)建立了队伍\((\d+),\d+\)",
-    "process_join_party": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?用户(\d+)成为队员\((\d+),\d+\)",
-    "process_leave_party": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?用户(\d+)脱离队伍\((\d+),\d+\)",
+    "process_create_party": r"用户(\d+)建立了队伍\((\d+),\d+\)",
+    "process_join_party": r"用户(\d+)成为队员\((\d+),\d+\)",
+    "process_leave_party": r"用户(\d+)脱离队伍\((\d+),\d+\)",
     "petEggHatch": "The Role ID %d hatched the pet egg ID %d.",
     "petEggRestore": "The Role ID %d restored a pet and received the pet egg ID %d.",
-    "process_craft_item": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?用户(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+)",
+    "process_craft_item": r"用户(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+)",
     "die": "Role %d died. Death type: %d. Attacker: %d.",
     "spendMoney": "The Role ID %d spent %d money.",
     "spConsume": "The Role ID %d consumed %d sp.",
@@ -75,7 +77,7 @@ REGEX_PATTERNS = {
     "roleLogout": "The account ID %d logged out with the role ID %d",
     "roleLogin": "The account ID %d logged in with the role ID %d",
     "dropItem": "The Role ID %d discarded %d unit(s) of item ID %d",
-    "process_pick_up_money": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?用户(\d+)拣起金钱(\d+)",
+    "process_pick_up_money": r"用户(\d+)拣起金钱(\d+)",
     "discardMoney": "The Role ID %d discarded %d money",
     "buyItem": "The Role ID %d bought %d unit(s) of the item ID: %d from a NPC",
     "sellItem": "The Role ID %d sold %d unit(s) of the item ID: %d to a NPC",
@@ -84,10 +86,10 @@ REGEX_PATTERNS = {
     "dropEquipment": "The Role ID %d discarded his equipment of ID %d",
     "pickupItem": "The Role ID %d picked up %d unit(s) of item %d (discarded by role ID %d)",
     "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
-    "process_task": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*?roleid=(\d+):taskid=(\d+)",
+    "process_task": r"roleid=(\d+):taskid=(\d+)",
     "receiveItemFromTask": "The Role ID %d received %d unit(s) of the item ID %d from the task ID %d",
     "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",
     "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
     "gShopTrade": "User ID %d performed a trade with the following details: Magic Number: %d, Order ID: %d, Item ID: %d, Expire: %d, Item Count: %d, Cash Needed: %d, Cash Left: %d, GUID 1: %d, GUID 2: %d",
-    "process_exp_sp": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*? 用户(\d+)得到经验 (\d+)/(\d+)",
+    "process_exp_sp": r"用户(\d+)得到经验 (\d+)/(\d+)",
 }
