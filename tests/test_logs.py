@@ -2,7 +2,6 @@
 
 import unittest
 from pw_logger.log_listener import LogHandler
-import pytest
 
 
 class TestLogs(unittest.TestCase):
@@ -20,7 +19,10 @@ class TestLogs(unittest.TestCase):
         self.receive_task = "2024-09-23 08:29:26 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6436:type=1:msg=CheckDeliverTask"
         self.give_up_task = "2024-09-24 08:03:33 pwtestes.com gamed: notice : formatlog:task:roleid=1120:taskid=33582:type=1:msg=GiveUpTask"
         self.receive_xp_task = "2024-09-24 08:01:17 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6437:type=1:msg=DeliverByAwardData: success = 1, gold = 8100, exp = 13500, sp = 3000, reputation = 2"
-        self.receive_item_tasl = "2024-09-24 08:01:17 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6437:type=1:msg=DeliverItem: Item id = 3366, Count = 1"
+        self.receive_item_task = "2024-09-24 08:01:17 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6437:type=1:msg=DeliverItem: Item id = 3366, Count = 1"
+        self.mine_item = (
+            "2024-09-21 08:23:02 pwtestes.com gamed: info : 用户1028采集得到2个1837"
+        )
         self.handler = LogHandler()
 
     def test_exp_sp_log(self):
@@ -64,5 +66,12 @@ class TestLogs(unittest.TestCase):
         """
         Test if the receive item task log line is correctly processed
         """
-        results = self.handler.process_log_line(self.receive_item_tasl)
+        results = self.handler.process_log_line(self.receive_item_task)
         self.assertEqual(results, (self.handler.now, "1088", "6437", "3366", "1"))
+
+    def test_mine_item(self):
+        """
+        Test if the mine item log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.mine_item)
+        self.assertEqual(results, (self.handler.now, "1028", "2", "1837"))
