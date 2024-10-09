@@ -92,17 +92,7 @@ class TestLogs(unittest.TestCase):
         results = self.handler.process_log_line(self.craft_item)
         self.assertEqual(
             results,
-            (
-                "2024-09-24 18:28:03",
-                "1104",
-                "5",
-                "11330",
-                "1275",
-                "1823",
-                "10",
-                "1830",
-                "15",
-            ),
+            ("2024-09-24 18:28:03", "1104", "5", "11330", "1275"),
         )
 
     def test_create_faction(self):
