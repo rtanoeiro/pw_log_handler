@@ -2,14 +2,19 @@
 
 log_script="log_listener.py"
 log_file_chat="world2.chat"
-log_file_format="world2.formatlog"
-log_file="world2.log"
+#log_file_format="world2.formatlog"
+#log_file="world2.log"
 read_from_start="true"
 
 
 process_log_line() {
     local log_line="$1"
-    python "${log_script}" "${log_line}" 2>>run.log
+    if [ -f "$log_script" ]; then
+        python "$log_script" "$log_line" 2>>run.log
+    else
+        echo "Error: $log_script not found." >&2
+        exit 1
+    fi
 }
 
 read_log_file() {
@@ -28,6 +33,6 @@ read_log_file() {
 }
 
 # Read all log files in parallel
-read_log_file "$log_file_chat" &
-read_log_file "$log_file_format" &
+#read_log_file "$log_file_chat" &
+#read_log_file "$log_file_format" &
 read_log_file "$log_file" &
