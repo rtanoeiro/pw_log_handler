@@ -24,6 +24,8 @@ class TestLogs(unittest.TestCase):
             "2024-09-21 08:23:02 pwtestes.com gamed: info : 用户1028采集得到2个1837"
         )
         self.craft_item = "2024-09-24 18:28:03 pwtestes.com gamed: info : 用户1104制造了5个11330, 配方1275, 消耗材料1823, 数量10; 材料1830, 数量15;"
+        self.create_faction = "2024-10-06 03:10:54 pwtestes.com gamedbd: notice : formatlog:faction:type=create:roleid=1024:factionid=1"
+        self.upgrade_faction = "2024-10-06 03:11:10 pwtestes.com gamedbd: notice : formatlog:upgradefaction:factionid=1:master=1024:money=194154706:level=1"
         self.handler = LogHandler()
 
     def test_exp_sp_log(self):
@@ -96,3 +98,17 @@ class TestLogs(unittest.TestCase):
                 "15",
             ),
         )
+
+    def test_create_faction(self):
+        """
+        Test if the create faction log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.create_faction)
+        self.assertEqual(results, (self.handler.now, "1024", "1"))
+
+    def test_upgrade_faction(self):
+        """
+        Test if the upgrade faction log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.upgrade_faction)
+        self.assertEqual(results, (self.handler.now, "1", "1024", "194154706", "2"))

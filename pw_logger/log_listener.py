@@ -203,6 +203,38 @@ class LogHandler:
             resource2_count,
         )
 
+    def process_create_faction(self, log_line: str, function: str):
+        """
+        Function called when the player creates a faction
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        roleid = matches[0][0]
+        factionid = matches[0][1]
+        print(f"Role ID {roleid} created faction ID {factionid} at {self.now}")
+        return self.now, roleid, factionid
+
+    def process_upgrade_faction(self, log_line: str, function: str):
+        """
+        Function called when the player upgrades a faction
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        factionid = matches[0][0]
+        roleid = matches[0][1]
+        money = matches[0][2]
+        level = str(int(matches[0][3]) + 1)
+        print(
+            f"Faction ID {factionid} was upgraded by the master role {roleid}. Money: {money}, Level: {level}"
+        )
+        return self.now, factionid, roleid, money, level
+
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:

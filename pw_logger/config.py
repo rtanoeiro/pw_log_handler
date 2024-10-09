@@ -7,9 +7,9 @@ LOG_PATTERNS = {
     "formatlog:trade": "processTrade",
     "formatlog:task": "process_task",  # done
     "formatlog:die": "processDie",
-    "formatlog:faction": "processFactionActions",
+    "formatlog:faction": "process_create_faction",  # done
     "formatlog:gshop_trade": "processGShopTrade",
-    "formatlog:upgradefaction": "processUpgradeFaction",
+    "formatlog:upgradefaction": "process_upgrade_faction",  # done
     "建立了队伍": "processCreateParty",
     "成为队员": "processJoinParty",
     "丢弃包裹": "processDropItem",
@@ -24,7 +24,7 @@ LOG_PATTERNS = {
     "花掉金钱": "processSpendMoney",
     "消耗了sp": "processSpConsume",
     "技能": "processSkillLevelUp",
-    "制造了": "process_craft_item",
+    "制造了": "process_craft_item",  # done
     "采集得到": "process_mine",  # done
     "孵化了宠物蛋": "processPetEggHatch",
     "还原了宠物蛋": "processPetEggRestore",
@@ -52,14 +52,14 @@ REGEX_PATTERNS = {
     "movePlayer": "GM %d moved player %d to position (%f, %f, %f).",
     "command": "The GM with Role ID %d executed internal command %d.",
     "process_mine": r"用户(\d+)采集得到(\d+)个(\d+)",
-    "upgradeFaction": "Faction with ID %d was upgraded by the master role %d. Money: %d, Level: %d",
-    "deleteRoleFromFaction": "(Type: %s) Role with ID %d was deleted from Faction ID %d. Role: %d",
+    "process_create_faction": r"roleid=(\d+):factionid=(\d+)",
+    "process_upgrade_faction": r"factionid=(\d+):master=(\d+):money=(\d+):level=(\d+)",
+    "deleteFaction": "(Action type: %s) An attempt to delete the faction ID %d was detected!",
     "joinFaction": "(Type: %s) The Role ID %d joined the Faction ID %d",
     "promoteRoleInFaction": "(Type: %s) The Role ID %d was promoted by his superior (ID %d) in Faction ID %d. New position: %d",
+    "deleteRoleFromFaction": "(Type: %s) Role with ID %d was deleted from Faction ID %d. Role: %d",
     "leaveFaction": "(Type: %s) The Role ID %d just left the Faction ID %d, his position was: %d",
     "pickupTeamMoney": "Role ID %d picked up money (%d) dropped by Role ID %d they both were in a Party.",
-    "deleteFaction": "(Action type: %s) An attempt to delete the faction ID %d was detected!",
-    "createFaction": "(Action type: %s) The Role ID %d just created a new faction (faction ID: %d).",
     "createParty": "The Role ID %d created team with ID %d (Type: %d)",
     "joinParty": "The Role ID %d joined team with ID %d as member %d",
     "petEggHatch": "The Role ID %d hatched the pet egg ID %d.",
