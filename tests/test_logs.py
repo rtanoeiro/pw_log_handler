@@ -23,6 +23,7 @@ class TestLogs(unittest.TestCase):
         self.mine_item = (
             "2024-09-21 08:23:02 pwtestes.com gamed: info : 用户1028采集得到2个1837"
         )
+        self.craft_item = "2024-09-24 18:28:03 pwtestes.com gamed: info : 用户1104制造了5个11330, 配方1275, 消耗材料1823, 数量10; 材料1830, 数量15;"
         self.handler = LogHandler()
 
     def test_exp_sp_log(self):
@@ -75,3 +76,23 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.mine_item)
         self.assertEqual(results, (self.handler.now, "1028", "2", "1837"))
+
+    def test_craft_item(self):
+        """
+        Test if the craft item log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.craft_item)
+        self.assertEqual(
+            results,
+            (
+                self.handler.now,
+                "1104",
+                "5",
+                "11330",
+                "1275",
+                "1823",
+                "10",
+                "1830",
+                "15",
+            ),
+        )

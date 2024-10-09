@@ -170,6 +170,39 @@ class LogHandler:
         )
         return self.now, roleid, item_count, itemid
 
+    def process_craft_item(self, log_line: str, function: str):
+        """
+        Function called when the player crafts an item
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        print(f"matches: {matches}")
+        roleid = matches[0][0]
+        item_count = matches[0][1]
+        itemid = matches[0][2]
+        recipe = matches[0][3]
+        resource1 = matches[0][4]
+        resource1_count = matches[0][5]
+        resource2 = matches[0][6]
+        resource2_count = matches[0][7]
+        print(
+            f"Role ID {roleid} crafted {item_count} unit(s) of item ID {itemid} at {self.now}"
+        )
+        return (
+            self.now,
+            roleid,
+            item_count,
+            itemid,
+            recipe,
+            resource1,
+            resource1_count,
+            resource2,
+            resource2_count,
+        )
+
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
