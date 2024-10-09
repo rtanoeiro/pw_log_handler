@@ -5,7 +5,7 @@ import re
 import sys
 from typing import Any
 
-from pw_logger.config import LOG_PATTERNS, REGEX_PATTERNS, TASK_PATTERNS
+from scripts.config import LOG_PATTERNS, REGEX_PATTERNS, TASK_PATTERNS
 
 
 class LogHandler:
