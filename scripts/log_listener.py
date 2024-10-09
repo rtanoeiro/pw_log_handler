@@ -19,7 +19,6 @@ class LogHandler:
         self.log_patterns = LOG_PATTERNS
         self.regex_patterns = REGEX_PATTERNS
         self.task_patterns = TASK_PATTERNS
-        self.now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def process_log_line(self, log_line: str) -> tuple[Any] | None:
         """
@@ -30,20 +29,6 @@ class LogHandler:
         """
         results = self.get_method(log_line)
         return results
-
-    def regex_match(self, regex_expression: str, log_line: str):
-        """
-        Finds all matches from a regex.
-
-        Arguments:
-            regex_expression -- Regex Expression
-            log_line -- Log Line that contains the information to be extracted
-
-        Returns:
-            matches: All matches
-        """
-        matches = re.search(regex_expression, log_line)
-        return matches
 
     def get_method(self, log_line: str) -> tuple[Any] | None:
         """
@@ -73,7 +58,6 @@ class LogHandler:
         """
         regex = self.regex_patterns[function]
         matches = re.search(regex, log_line)
-        print(f"matches: {matches}")
         if matches:
             date_time = matches.group(1)
             roleid = matches.group(2)
@@ -91,11 +75,13 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        money = matches[0][1]
-        print(f"Role ID: {roleid} picked up {money} money at {self.now}")
-        return self.now, roleid, money
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            money = matches.group(2)
+        print(f"Role ID: {roleid} picked up {money} money at {date_time}")
+        return date_time, roleid, money
 
     def process_task(self, log_line: str, function: str):
         """
@@ -105,15 +91,17 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        taskid = matches[0][1]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            taskid = matches.group(3)
         if "GiveUpTask" in log_line:
-            print(f"Role ID {roleid} gave up task ID {taskid} at {self.now}")
-            return self.now, roleid, taskid, "give_up"
+            print(f"Role ID {roleid} gave up task ID {taskid} at {date_time}")
+            return date_time, roleid, taskid, "give_up"
         elif "CheckDeliverTask" in log_line:
-            print(f"Role ID {roleid} received task ID {taskid} at {self.now}")
-            return self.now, roleid, taskid, "receive"
+            print(f"Role ID {roleid} received task ID {taskid} at {date_time}")
+            return date_time, roleid, taskid, "receive"
         elif "DeliverItem" in log_line:
             return self.process_task_give_item(log_line, roleid, taskid)
         elif "DeliverByAwardData" in log_line:
@@ -127,13 +115,15 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.task_patterns["DeliverItem"]
-        matches = self.regex_match(regex, log_line)
-        itemid = matches[0][0]
-        item_count = matches[0][1]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            itemid = matches.group(2)
+            item_count = matches.group(3)
         print(
             f"Role ID {roleid} received {item_count} units of item ID {itemid} from task ID {taskid}"
         )
-        return self.now, roleid, taskid, itemid, item_count
+        return date_time, roleid, taskid, itemid, item_count
 
     def process_task_receive_reward(self, log_line: str, roleid: str, taskid: str):
         """
@@ -144,15 +134,17 @@ class LogHandler:
             taskid -- Task that gave item
         """
         regex = self.task_patterns["DeliverByAwardData"]
-        matches = self.regex_match(regex, log_line)
-        gold = matches[0][0]
-        exp = matches[0][1]
-        sp = matches[0][2]
-        reputation = matches[0][3]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            gold = matches.group(2)
+            exp = matches.group(3)
+            sp = matches.group(4)
+            reputation = matches.group(5)
         print(
             f"Role ID {roleid} completed the task ID {taskid} and received as reward: gold = {gold}, exp = {exp}, sp = {sp}, reputation = {reputation}"
         )
-        return self.now, roleid, taskid, gold, exp, sp, reputation
+        return date_time, roleid, taskid, gold, exp, sp, reputation
 
     def process_mine(self, log_line: str, function: str):
         """
@@ -162,14 +154,16 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        item_count = matches[0][1]
-        itemid = matches[0][2]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            item_count = matches.group(2)
+            itemid = matches.group(4)
         print(
             f"Role ID {roleid} mined and obtained {item_count} unit(s) of item ID {itemid}"
         )
-        return self.now, roleid, item_count, itemid
+        return date_time, roleid, item_count, itemid
 
     def process_craft_item(self, log_line: str, function: str):
         """
@@ -179,29 +173,17 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        item_count = matches[0][1]
-        itemid = matches[0][2]
-        recipe = matches[0][3]
-        resource1 = matches[0][4]
-        resource1_count = matches[0][5]
-        resource2 = matches[0][6]
-        resource2_count = matches[0][7]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            item_count = matches.group(2)
+            itemid = matches.group(4)
+            recipe = matches.group(5)
         print(
-            f"Role ID {roleid} crafted {item_count} unit(s) of item ID {itemid} at {self.now}"
+            f"Role ID {roleid} crafted {item_count} unit(s) of item ID {itemid} at {date_time}"
         )
-        return (
-            self.now,
-            roleid,
-            item_count,
-            itemid,
-            recipe,
-            resource1,
-            resource1_count,
-            resource2,
-            resource2_count,
-        )
+        return date_time, roleid, item_count, itemid, recipe
 
     def process_create_faction(self, log_line: str, function: str):
         """
@@ -211,11 +193,13 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        factionid = matches[0][1]
-        print(f"Role ID {roleid} created faction ID {factionid} at {self.now}")
-        return self.now, roleid, factionid
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            factionid = matches.group(3)
+        print(f"Role ID {roleid} created faction ID {factionid} at {date_time}")
+        return date_time, roleid, factionid
 
     def process_upgrade_faction(self, log_line: str, function: str):
         """
@@ -225,15 +209,17 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        factionid = matches[0][0]
-        roleid = matches[0][1]
-        money = matches[0][2]
-        level = str(int(matches[0][3]) + 1)
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            factionid = matches.group(2)
+            roleid = matches.group(3)
+            money = matches.group(4)
+            level = str(int(matches.group(5)) + 1)
         print(
             f"Faction ID {factionid} was upgraded by the master role {roleid}. Money: {money}, Level: {level}"
         )
-        return self.now, factionid, roleid, money, level
+        return date_time, factionid, roleid, money, level
 
     def process_create_party(self, log_line: str, function: str):
         """
@@ -243,12 +229,14 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        partyid = matches[0][1]
-        print(f"Role ID {roleid} created party ID {partyid} at {self.now}")
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            partyid = matches.group(3)
+        print(f"Role ID {roleid} created party ID {partyid} at {date_time}")
 
-        return self.now, roleid, partyid
+        return date_time, roleid, partyid
 
     def process2_join_party(self, log_line: str, function: str):
         """
@@ -258,12 +246,14 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        partyid = matches[0][1]
-        print(f"Role ID {roleid} joined party ID {partyid} at {self.now}")
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            partyid = matches.group(3)
+        print(f"Role ID {roleid} joined party ID {partyid} at {date_time}")
 
-        return self.now, roleid, partyid
+        return date_time, roleid, partyid
 
     def process_leave_party(self, log_line: str, function: str):
         """
@@ -273,12 +263,14 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        partyid = matches[0][1]
-        print(f"Role ID {roleid} left party ID {partyid} at {self.now}")
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            partyid = matches.group(3)
+        print(f"Role ID {roleid} left party ID {partyid} at {date_time}")
 
-        return self.now, roleid, partyid
+        return date_time, roleid, partyid
 
 
 if __name__ == "__main__":
