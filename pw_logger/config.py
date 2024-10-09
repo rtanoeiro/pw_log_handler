@@ -63,7 +63,6 @@ REGEX_PATTERNS = {
     "moveToPlayer": "GM %d moved to player %d at position (%f, %f, %f).",
     "movePlayer": "GM %d moved player %d to position (%f, %f, %f).",
     "process_mine": r"用户(\d+)采集得到(\d+)个(\d+)",
-    "obtainTitle": "The Role ID %d obtained the title ID %d at time %d.",
     "command": "The GM with Role ID %d executed internal command %d.",
     "craftItem": "The Role ID %d crafted %d unit(s) of the item ID: %d using recipe ID: %d. Consumed materials: %s.",
     "die": "Role %d died. Death type: %d. Attacker: %d.",
