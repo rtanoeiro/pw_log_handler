@@ -42,7 +42,7 @@ class LogHandler:
         Returns:
             matches: All matches
         """
-        matches = re.findall(regex_expression, log_line)
+        matches = re.search(regex_expression, log_line)
         return matches
 
     def get_method(self, log_line: str) -> tuple[Any] | None:
@@ -72,13 +72,16 @@ class LogHandler:
             function -- Log Line called, it's used to get the regex pattern
         """
         regex = self.regex_patterns[function]
-        matches = self.regex_match(regex, log_line)
-        roleid = matches[0][0]
-        exp = matches[0][1]
-        sp = matches[0][2]
-        print(f"Role ID {roleid} received {exp} EXP and {sp} SP at {self.now}")
+        matches = re.search(regex, log_line)
+        print(f"matches: {matches}")
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            exp = matches.group(3)
+            sp = matches.group(4)
+        print(f"Role ID {roleid} received {exp} EXP and {sp} SP at {date_time}")
 
-        return self.now, roleid, exp, sp
+        return date_time, roleid, exp, sp
 
     def process_pick_up_money(self, log_line: str, function: str):
         """
@@ -125,7 +128,6 @@ class LogHandler:
         """
         regex = self.task_patterns["DeliverItem"]
         matches = self.regex_match(regex, log_line)
-        print(f"Matches: {matches}")
         itemid = matches[0][0]
         item_count = matches[0][1]
         print(
@@ -143,7 +145,6 @@ class LogHandler:
         """
         regex = self.task_patterns["DeliverByAwardData"]
         matches = self.regex_match(regex, log_line)
-        print(f"Matches: {matches}")
         gold = matches[0][0]
         exp = matches[0][1]
         sp = matches[0][2]
@@ -179,7 +180,6 @@ class LogHandler:
         """
         regex = self.regex_patterns[function]
         matches = self.regex_match(regex, log_line)
-        print(f"matches: {matches}")
         roleid = matches[0][0]
         item_count = matches[0][1]
         itemid = matches[0][2]
@@ -250,7 +250,7 @@ class LogHandler:
 
         return self.now, roleid, partyid
 
-    def process_join_party(self, log_line: str, function: str):
+    def process2_join_party(self, log_line: str, function: str):
         """
         Function called when the player joins a party
         Arguments:

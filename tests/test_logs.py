@@ -10,10 +10,10 @@ class TestLogs(unittest.TestCase):
     """
 
     def setUp(self):
-        self.exp_sp_log = (
+        self.exp_sp = (
             "2024-10-06 21:52:43 pwtestes.com gamed: info : 用户1024得到经验 27/6"
         )
-        self.pickup_money_log = (
+        self.pickup_money = (
             "2024-09-21 08:23:24 pwtestes.com gamed: info : 用户1028拣起金钱9"
         )
         self.receive_task = "2024-09-23 08:29:26 pwtestes.com gamed: notice : formatlog:task:roleid=1088:taskid=6436:type=1:msg=CheckDeliverTask"
@@ -37,29 +37,29 @@ class TestLogs(unittest.TestCase):
         """
         Test if the exp_sp log line is correctly processed
         """
-        results = self.handler.process_log_line(self.exp_sp_log)
-        self.assertEqual(results, (self.handler.now, "1024", "27", "6"))
+        results = self.handler.process_log_line(self.exp_sp)
+        self.assertEqual(results, ("2024-10-06 21:52:43", "1024", "27", "6"))
 
     def test_pickup_money_log(self):
         """
         Test if the pickup money log line is correctly processed
         """
-        results = self.handler.process_log_line(self.pickup_money_log)
-        self.assertEqual(results, (self.handler.now, "1028", "9"))
+        results = self.handler.process_log_line(self.pickup_money)
+        self.assertEqual(results, ("2024-09-21 08:23:24", "1028", "9"))
 
     def test_receive_task(self):
         """
         Test if the receive task log line is correctly processed
         """
         results = self.handler.process_log_line(self.receive_task)
-        self.assertEqual(results, (self.handler.now, "1088", "6436", "receive"))
+        self.assertEqual(results, ("2024-09-23 08:29:26", "1088", "6436", "receive"))
 
     def test_task_give_up(self):
         """
         Test if the give up task log line is correctly processed
         """
         results = self.handler.process_log_line(self.give_up_task)
-        self.assertEqual(results, (self.handler.now, "1120", "33582", "give_up"))
+        self.assertEqual(results, ("2024-09-24 08:03:33", "1120", "33582", "give_up"))
 
     def test_receive_xp_task(self):
         """
@@ -67,7 +67,8 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.receive_xp_task)
         self.assertEqual(
-            results, (self.handler.now, "1088", "6437", "8100", "13500", "3000", "2")
+            results,
+            ("2024-09-24 08:01:17", "1088", "6437", "8100", "13500", "3000", "2"),
         )
 
     def test_receive_item_task(self):
@@ -75,14 +76,14 @@ class TestLogs(unittest.TestCase):
         Test if the receive item task log line is correctly processed
         """
         results = self.handler.process_log_line(self.receive_item_task)
-        self.assertEqual(results, (self.handler.now, "1088", "6437", "3366", "1"))
+        self.assertEqual(results, ("2024-09-24 08:01:17", "1088", "6437", "3366", "1"))
 
     def test_mine_item(self):
         """
         Test if the mine item log line is correctly processed
         """
         results = self.handler.process_log_line(self.mine_item)
-        self.assertEqual(results, (self.handler.now, "1028", "2", "1837"))
+        self.assertEqual(results, ("2024-09-21 08:23:02", "1028", "2", "1837"))
 
     def test_craft_item(self):
         """
@@ -92,7 +93,7 @@ class TestLogs(unittest.TestCase):
         self.assertEqual(
             results,
             (
-                self.handler.now,
+                "2024-09-24 18:28:03",
                 "1104",
                 "5",
                 "11330",
@@ -109,32 +110,34 @@ class TestLogs(unittest.TestCase):
         Test if the create faction log line is correctly processed
         """
         results = self.handler.process_log_line(self.create_faction)
-        self.assertEqual(results, (self.handler.now, "1024", "1"))
+        self.assertEqual(results, ("2024-10-06 03:10:54", "1024", "1"))
 
     def test_upgrade_faction(self):
         """
         Test if the upgrade faction log line is correctly processed
         """
         results = self.handler.process_log_line(self.upgrade_faction)
-        self.assertEqual(results, (self.handler.now, "1", "1024", "194154706", "2"))
+        self.assertEqual(
+            results, ("2024-10-06 03:11:10", "1", "1024", "194154706", "2")
+        )
 
     def test_create_party(self):
         """
         Test if the create party log line is correctly processed
         """
         results = self.handler.process_log_line(self.create_party)
-        self.assertEqual(results, (self.handler.now, "1104", "1104"))
+        self.assertEqual(results, ("2024-09-27 15:46:15", "1104", "1104"))
 
     def test_join_party(self):
         """
         Test if the join party log line is correctly processed
         """
         results = self.handler.process_log_line(self.join_party)
-        self.assertEqual(results, (self.handler.now, "1184", "1104"))
+        self.assertEqual(results, ("2024-09-27 15:46:15", "1184", "1104"))
 
     def test_leave_party(self):
         """
         Test if the leave party log line is correctly processed
         """
         results = self.handler.process_log_line(self.leave_party)
-        self.assertEqual(results, (self.handler.now, "1104", "1104"))
+        self.assertEqual(results, ("2024-09-27 16:08:46", "1104", "1104"))
