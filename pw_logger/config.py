@@ -8,10 +8,11 @@ LOG_PATTERNS = {
     "formatlog:task": "process_task",  # done
     "formatlog:die": "processDie",
     "formatlog:faction": "process_create_faction",  # done
-    "formatlog:gshop_trade": "processGShopTrade",
     "formatlog:upgradefaction": "process_upgrade_faction",  # done
-    "建立了队伍": "processCreateParty",
-    "成为队员": "processJoinParty",
+    "formatlog:gshop_trade": "processGShopTrade",
+    "建立了队伍": "process_create_party",
+    "成为队员": "process_join_party",
+    "脱离队伍": "process_leave_party",
     "丢弃包裹": "processDropItem",
     "丢弃装备": "processDropEquipment",
     "拣起金钱": "process_pick_up_money",  # done
@@ -60,8 +61,9 @@ REGEX_PATTERNS = {
     "deleteRoleFromFaction": "(Type: %s) Role with ID %d was deleted from Faction ID %d. Role: %d",
     "leaveFaction": "(Type: %s) The Role ID %d just left the Faction ID %d, his position was: %d",
     "pickupTeamMoney": "Role ID %d picked up money (%d) dropped by Role ID %d they both were in a Party.",
-    "createParty": "The Role ID %d created team with ID %d (Type: %d)",
-    "joinParty": "The Role ID %d joined team with ID %d as member %d",
+    "process_create_party": r"用户(\d+)建立了队伍\((\d+),\d+\)",
+    "process_join_party": r"用户(\d+)成为队员\((\d+),\d+\)",
+    "process_leave_party": r"用户(\d+)脱离队伍\((\d+),\d+\)",
     "petEggHatch": "The Role ID %d hatched the pet egg ID %d.",
     "petEggRestore": "The Role ID %d restored a pet and received the pet egg ID %d.",
     "process_craft_item": r"用户(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+)",

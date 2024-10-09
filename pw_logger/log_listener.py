@@ -235,6 +235,51 @@ class LogHandler:
         )
         return self.now, factionid, roleid, money, level
 
+    def process_create_party(self, log_line: str, function: str):
+        """
+        Function called when the player creates a party
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        roleid = matches[0][0]
+        partyid = matches[0][1]
+        print(f"Role ID {roleid} created party ID {partyid} at {self.now}")
+
+        return self.now, roleid, partyid
+
+    def process_join_party(self, log_line: str, function: str):
+        """
+        Function called when the player joins a party
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        roleid = matches[0][0]
+        partyid = matches[0][1]
+        print(f"Role ID {roleid} joined party ID {partyid} at {self.now}")
+
+        return self.now, roleid, partyid
+
+    def process_leave_party(self, log_line: str, function: str):
+        """
+        Function called when the player leaves a party
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        roleid = matches[0][0]
+        partyid = matches[0][1]
+        print(f"Role ID {roleid} left party ID {partyid} at {self.now}")
+
+        return self.now, roleid, partyid
+
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:

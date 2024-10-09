@@ -26,6 +26,11 @@ class TestLogs(unittest.TestCase):
         self.craft_item = "2024-09-24 18:28:03 pwtestes.com gamed: info : 用户1104制造了5个11330, 配方1275, 消耗材料1823, 数量10; 材料1830, 数量15;"
         self.create_faction = "2024-10-06 03:10:54 pwtestes.com gamedbd: notice : formatlog:faction:type=create:roleid=1024:factionid=1"
         self.upgrade_faction = "2024-10-06 03:11:10 pwtestes.com gamedbd: notice : formatlog:upgradefaction:factionid=1:master=1024:money=194154706:level=1"
+        self.create_party = (
+            "2024-09-27 15:46:15 pwtestes.com gamed: info : 用户1104建立了队伍(1104,0)"
+        )
+        self.join_party = "2024-09-27 15:46:15 pwtestes.com gamed: info : 用户1184成为队员(1104,1727463280)"
+        self.leave_party = "2024-09-27 16:08:46 pwtestes.com gamed: info : 用户1104脱离队伍(1104,1727463280)"
         self.handler = LogHandler()
 
     def test_exp_sp_log(self):
@@ -112,3 +117,24 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.upgrade_faction)
         self.assertEqual(results, (self.handler.now, "1", "1024", "194154706", "2"))
+
+    def test_create_party(self):
+        """
+        Test if the create party log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.create_party)
+        self.assertEqual(results, (self.handler.now, "1104", "1104"))
+
+    def test_join_party(self):
+        """
+        Test if the join party log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.join_party)
+        self.assertEqual(results, (self.handler.now, "1184", "1104"))
+
+    def test_leave_party(self):
+        """
+        Test if the leave party log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.leave_party)
+        self.assertEqual(results, (self.handler.now, "1104", "1104"))
