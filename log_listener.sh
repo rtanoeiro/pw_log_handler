@@ -1,11 +1,13 @@
 #!/bin/bash
 
-log_script="log_listener.py"
-log_file_chat="world2.chat"
-#log_file_format="world2.formatlog"
-#log_file="world2.log"
+log_script="scripts/log_listener.py"
+log_file_chat="logs/world2.chat"
+log_file_format="logs/world2.formatlog"
+log_file="logs/world2.log"
 read_from_start="true"
 
+base_folder=$(pwd)
+export PYTHONPATH="$base_folder"
 
 process_log_line() {
     local log_line="$1"
@@ -33,6 +35,6 @@ read_log_file() {
 }
 
 # Read all log files in parallel
-#read_log_file "$log_file_chat" &
-#read_log_file "$log_file_format" &
+read_log_file "$log_file_chat" &
+read_log_file "$log_file_format" &
 read_log_file "$log_file" &
