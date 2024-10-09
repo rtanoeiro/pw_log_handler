@@ -107,18 +107,14 @@ class LogHandler:
         taskid = matches[0][1]
         if "GiveUpTask" in log_line:
             print(f"Role ID {roleid} gave up task ID {taskid} at {self.now}")
-            return_matches = self.now, roleid, taskid, "give_up"
-            return return_matches
+            return self.now, roleid, taskid, "give_up"
         elif "CheckDeliverTask" in log_line:
             print(f"Role ID {roleid} received task ID {taskid} at {self.now}")
-            return_matches = self.now, roleid, taskid, "receive"
-            return return_matches
+            return self.now, roleid, taskid, "receive"
         elif "DeliverItem" in log_line:
-            return_matches = self.process_task_give_item(log_line, roleid, taskid)
-            return return_matches
+            return self.process_task_give_item(log_line, roleid, taskid)
         elif "DeliverByAwardData" in log_line:
-            return_matches = self.process_task_receive_reward(log_line, roleid, taskid)
-            return return_matches
+            return self.process_task_receive_reward(log_line, roleid, taskid)
 
     def process_task_give_item(self, log_line: str, roleid: str, taskid: str):
         """
@@ -156,6 +152,23 @@ class LogHandler:
             f"Role ID {roleid} completed the task ID {taskid} and received as reward: gold = {gold}, exp = {exp}, sp = {sp}, reputation = {reputation}"
         )
         return self.now, roleid, taskid, gold, exp, sp, reputation
+
+    def process_mine(self, log_line: str, function: str):
+        """
+        Function called when the player mines
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = self.regex_match(regex, log_line)
+        roleid = matches[0][0]
+        item_count = matches[0][1]
+        itemid = matches[0][2]
+        print(
+            f"Role ID {roleid} mined and obtained {item_count} unit(s) of item ID {itemid}"
+        )
+        return self.now, roleid, item_count, itemid
 
 
 if __name__ == "__main__":

@@ -1,12 +1,11 @@
 LOG_PATTERNS = {
     "GM:": "processGMActions",
     "chat :": "processChat",
-    "obtain title": "processObtainTitle",
     "formatlog:sendmail": "processSendMail",
     "formatlog:rolelogin": "processRoleLogin",
     "formatlog:rolelogout": "processRoleLogout",
     "formatlog:trade": "processTrade",
-    "formatlog:task": "process_task",
+    "formatlog:task": "process_task",  # done
     "formatlog:die": "processDie",
     "formatlog:faction": "processFactionActions",
     "formatlog:gshop_trade": "processGShopTrade",
@@ -15,7 +14,7 @@ LOG_PATTERNS = {
     "成为队员": "processJoinParty",
     "丢弃包裹": "processDropItem",
     "丢弃装备": "processDropEquipment",
-    "拣起金钱": "process_pick_up_money",
+    "拣起金钱": "process_pick_up_money",  # done
     "丢弃金钱": "processDiscardMoney",
     "从NPC购买了": "processBuyItem",
     "卖店": "processSellItem",
@@ -26,11 +25,11 @@ LOG_PATTERNS = {
     "消耗了sp": "processSpConsume",
     "技能": "processSkillLevelUp",
     "制造了": "processCraftItem",
-    "采集得到": "processMine",
+    "采集得到": "process_mine",
     "孵化了宠物蛋": "processPetEggHatch",
     "还原了宠物蛋": "processPetEggRestore",
     "组队拣起用户": "pickupTeamMoney",
-    "得到经验": "process_exp_sp",
+    "得到经验": "process_exp_sp",  # done
 }
 
 TASK_PATTERNS = {
@@ -63,7 +62,7 @@ REGEX_PATTERNS = {
     "attemptMoveToPlayer": "GM %d attempted to move to player %d.",
     "moveToPlayer": "GM %d moved to player %d at position (%f, %f, %f).",
     "movePlayer": "GM %d moved player %d to position (%f, %f, %f).",
-    "mine": "The Role ID %d mined and obtained %d unit(s) of item ID %d.",
+    "process_mine": r"用户(\d+)采集得到(\d+)个(\d+)",
     "obtainTitle": "The Role ID %d obtained the title ID %d at time %d.",
     "command": "The GM with Role ID %d executed internal command %d.",
     "craftItem": "The Role ID %d crafted %d unit(s) of the item ID: %d using recipe ID: %d. Consumed materials: %s.",
