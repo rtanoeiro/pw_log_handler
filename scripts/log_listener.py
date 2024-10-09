@@ -1,6 +1,5 @@
 """This is the main script for the processing of the log file"""
 
-import datetime
 import re
 import sys
 from typing import Any
@@ -46,7 +45,6 @@ class LogHandler:
                 if method:
                     return method(log_line, func_name)  # pylint: disable=not-callable
 
-        print("Pattern doesn't match any method")
         return None
 
     def process_exp_sp(self, log_line: str, function: str):
