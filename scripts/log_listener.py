@@ -79,7 +79,7 @@ class LogHandler:
         if matches:
             date_time = matches.group(1)
             roleid = matches.group(2)
-            money = matches.group(2)
+            money = matches.group(3)
         print(f"Role ID: {roleid} picked up {money} money at {date_time}")
         return date_time, roleid, money
 
@@ -158,7 +158,7 @@ class LogHandler:
         if matches:
             date_time = matches.group(1)
             roleid = matches.group(2)
-            item_count = matches.group(2)
+            item_count = matches.group(3)
             itemid = matches.group(4)
         print(
             f"Role ID {roleid} mined and obtained {item_count} unit(s) of item ID {itemid}"
@@ -177,7 +177,7 @@ class LogHandler:
         if matches:
             date_time = matches.group(1)
             roleid = matches.group(2)
-            item_count = matches.group(2)
+            item_count = matches.group(3)
             itemid = matches.group(4)
             recipe = matches.group(5)
         print(
@@ -238,7 +238,7 @@ class LogHandler:
 
         return date_time, roleid, partyid
 
-    def process2_join_party(self, log_line: str, function: str):
+    def process_join_party(self, log_line: str, function: str):
         """
         Function called when the player joins a party
         Arguments:
