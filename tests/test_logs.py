@@ -10,6 +10,8 @@ class TestLogs(unittest.TestCase):
     """
 
     def setUp(self):
+        self.login = "2024-10-06 20:42:05 pwtestes.com glinkd-1: notice : formatlog:rolelogin:userid=1072:roleid=1041:lineid=1:localsid=147"
+        self.logout = "2024-10-06 21:40:07 pwtestes.com glinkd-1: notice : formatlog:rolelogout:userid=1072:roleid=1041:localsid=147:time=3481"
         self.exp_sp = (
             "2024-10-06 21:52:43 pwtestes.com gamed: info : 用户1024得到经验 27/6"
         )
@@ -33,6 +35,20 @@ class TestLogs(unittest.TestCase):
         self.leave_party = "2024-09-27 16:08:46 pwtestes.com gamed: info : 用户1104脱离队伍(1104,1727463280)"
         self.kill_person = "2024-10-06 20:43:36 pwtestes.com gamed: notice : formatlog:die:roleid=1041:type=258:attacker=1024"
         self.handler = LogHandler()
+
+    def test_login_log(self):
+        """
+        Test if the login log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.login)
+        self.assertEqual(results, ("2024-10-06 20:42:05", "1072", "1041"))
+
+    def test_logout_log(self):
+        """
+        Test if the logout log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.logout)
+        self.assertEqual(results, ("2024-10-06 21:40:07", "1072", "1041"))
 
     def test_exp_sp_log(self):
         """

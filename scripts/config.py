@@ -4,8 +4,8 @@ LOG_PATTERNS = {
     "GM:": "processGMActions",
     "chat :": "processChat",
     "formatlog:sendmail": "processSendMail",
-    "formatlog:rolelogin": "processRoleLogin",
-    "formatlog:rolelogout": "processRoleLogout",
+    "formatlog:rolelogin": "process_login", # done
+    "formatlog:rolelogout": "process_logout", # done
     "formatlog:trade": "processTrade",
     "formatlog:task": "process_task",  # done
     "formatlog:die": "process_kill_person",  # done
@@ -74,8 +74,8 @@ REGEX_PATTERNS = {
     "spConsume": "The Role ID %d consumed %d sp.",
     "skillLevelUp": "The Role ID %d leveled up the skill ID %d to level %d.",
     "sendMail": "Timestamp: %d, The Role ID %d just sent a mail to role ID %d. Mail ID: %d. Mail size: %d. Money sent: %d. Item ID: %d. Item count: %d. Mail position: %d.",
-    "roleLogout": "The account ID %d logged out with the role ID %d",
-    "roleLogin": "The account ID %d logged in with the role ID %d",
+    "process_logout": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+):.*time=(\d+)",
+    "process_login": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+)",
     "dropItem": "The Role ID %d discarded %d unit(s) of item ID %d",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
     "discardMoney": "The Role ID %d discarded %d money",

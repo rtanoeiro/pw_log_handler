@@ -47,6 +47,38 @@ class LogHandler:
 
         return None
 
+    def process_login(self, log_line: str, function: str):
+        """
+        Function called when the player logs in
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            userid = matches.group(2)
+            roleid = matches.group(3)
+        print(f"User ID {userid} with Role {roleid} logged in at {date_time}")
+        return date_time, userid, roleid
+
+    def process_logout(self, log_line: str, function: str):
+        """
+        Function called when the player logs out
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            userid = matches.group(2)
+            roleid = matches.group(3)
+        print(f"User ID {userid} with Role {roleid} logged out at {date_time}")
+        return date_time, userid, roleid
+
     def process_exp_sp(self, log_line: str, function: str):
         """
         Function called when exp_sp pattern is found in the log line
