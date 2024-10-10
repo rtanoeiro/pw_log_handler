@@ -15,12 +15,11 @@ LOG_PATTERNS = {
     "建立了队伍": "process_create_party",  # done
     "成为队员": "process_join_party",  # done
     "脱离队伍": "process_leave_party",  # done
-    "丢弃包裹": "process_drop_item", # done
-    "丢弃装备": "process_drop_equipment",   # done
+    "丢弃包裹": "process_drop_item",  # done
+    "丢弃装备": "process_drop_equipment",  # done
     "拣起金钱": "process_pick_up_money",  # done
-    "丢弃金钱": "process_discard_money", # done
-    "从NPC购买了": "processBuyItem",
-    "卖店": "processSellItem",
+    "丢弃金钱": "process_discard_money",  # done
+    "卖店": "process_sell_item",
     "得到金钱": "processGetMoney",
     "拣起": "processPickupItem",
     "升级到": "processLevelUp",
@@ -78,8 +77,7 @@ REGEX_PATTERNS = {
     "trade": "Role %d traded with role %d. Money exchanged: %d from role %d and %d from role %d. Role %d traded %s items. And Role %d traded %s items.",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
     "process_discard_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃金钱(\d+)",
-    "buyItem": "The Role ID %d bought %d unit(s) of the item ID: %d from a NPC",
-    "sellItem": "The Role ID %d sold %d unit(s) of the item ID: %d to a NPC",
+    "process_sell_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)卖店(\d+)个(\d+)",
     "getMoney": "The Role ID %d received %d money",
     "process_task": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+)",
     "process_task_receive_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*Item id = (\d+), Count = (\d+)",
