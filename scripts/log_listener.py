@@ -339,7 +339,43 @@ class LogHandler:
         print(f"Role ID {roleid} traded {item_count} unit(s) of item ID {itemid} for {price} at {date_time}, cash used: {cash_needed}, cash left: {cash_left}")
 
         return date_time, roleid, itemid, item_count, price, cash_needed, cash_left
-                            
+
+    def process_drop_item(self, log_line: str, function: str):
+        """
+        Function called when the player drops an item
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            item_count = matches.group(3)
+            itemid = matches.group(4)
+        print(f"Role ID {roleid} dropped {item_count} item ID {itemid} at {date_time}")
+
+        return date_time, roleid, item_count, itemid
+
+    def process_drop_equipment(self, log_line: str, function:str):
+        """
+        Function called when the player drops an equipment
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            itemid = matches.group(3)
+        print(f"Role ID {roleid} dropped equipment ID {itemid} at {date_time}")
+
+        return date_time, roleid, itemid
+
+
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
         log_handler = LogHandler()

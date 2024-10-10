@@ -3,20 +3,20 @@
 LOG_PATTERNS = {
     "GM:": "processGMActions",
     "chat :": "processChat",
-    "formatlog:sendmail": "processSendMail",
-    "formatlog:rolelogin": "process_login", # done
-    "formatlog:rolelogout": "process_logout", # done
-    "formatlog:trade": "processTrade", # Waiting for log line
+    "formatlog:sendmail": "processSendMail",  # Waiting for log line
+    "formatlog:rolelogin": "process_login",  # done
+    "formatlog:rolelogout": "process_logout",  # done
+    "formatlog:trade": "processTrade",  # Waiting for log line
     "formatlog:task": "process_task",  # done
     "formatlog:die": "process_kill_person",  # done
     "formatlog:faction": "process_create_faction",  # done
     "formatlog:upgradefaction": "process_upgrade_faction",  # done
     "formatlog:gshop_trade": "process_gshop_trade",  # done
-    "建立了队伍": "process_create_party",
-    "成为队员": "process_join_party", # done
-    "脱离队伍": "process_leave_party", # done
-    "丢弃包裹": "processDropItem",
-    "丢弃装备": "processDropEquipment",
+    "建立了队伍": "process_create_party",  # done
+    "成为队员": "process_join_party",  # done
+    "脱离队伍": "process_leave_party",  # done
+    "丢弃包裹": "process_drop_item",
+    "丢弃装备": "process_drop_equipment", 
     "拣起金钱": "process_pick_up_money",  # done
     "丢弃金钱": "processDiscardMoney",
     "从NPC购买了": "processBuyItem",
@@ -76,16 +76,16 @@ REGEX_PATTERNS = {
     "sendMail": "Timestamp: %d, The Role ID %d just sent a mail to role ID %d. Mail ID: %d. Mail size: %d. Money sent: %d. Item ID: %d. Item count: %d. Mail position: %d.",
     "process_logout": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+):.*time=(\d+)",
     "process_login": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+)",
-    "dropItem": "The Role ID %d discarded %d unit(s) of item ID %d",
+    "process_drop_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃包裹(\d+)个(\d+)",
+    "process_drop_equipment": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃装备(\d+)",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
+    "pickupItem": "The Role ID %d picked up %d unit(s) of item %d (discarded by role ID %d)",
+    "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
+    "trade": "Role %d traded with role %d. Money exchanged: %d from role %d and %d from role %d. Role %d traded %s items. And Role %d traded %s items.",
     "discardMoney": "The Role ID %d discarded %d money",
     "buyItem": "The Role ID %d bought %d unit(s) of the item ID: %d from a NPC",
     "sellItem": "The Role ID %d sold %d unit(s) of the item ID: %d to a NPC",
     "getMoney": "The Role ID %d received %d money",
-    "trade": "Role %d traded with role %d. Money exchanged: %d from role %d and %d from role %d. Role %d traded %s items. And Role %d traded %s items.",
-    "dropEquipment": "The Role ID %d discarded his equipment of ID %d",
-    "pickupItem": "The Role ID %d picked up %d unit(s) of item %d (discarded by role ID %d)",
-    "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
     "process_task": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+)",
     "receiveItemFromTask": "The Role ID %d received %d unit(s) of the item ID %d from the task ID %d",
     "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",

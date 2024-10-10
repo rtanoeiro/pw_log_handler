@@ -35,6 +35,8 @@ class TestLogs(unittest.TestCase):
         self.leave_party = "2024-09-27 16:08:46 pwtestes.com gamed: info : 用户1104脱离队伍(1104,1727463280)"
         self.kill_person = "2024-10-06 20:43:36 pwtestes.com gamed: notice : formatlog:die:roleid=1041:type=258:attacker=1024"
         self.gshop_purchase = "2024-10-02 18:54:40 pwtestes.com gamed: notice : formatlog:gshop_trade:userid=1056:db_magic_number=1056:order_id=17:item_id=21508:expire=1730501681:item_count=1:cash_need=750000:cash_left=98649800:guid1=0:guid2=0"
+        self.drop_item = "2024-09-22 13:31:20 pwtestes.com gamed: info : 用户1072丢弃包裹1个154"
+        self.drop_equipament = "2024-10-06 22:14:40 pwtestes.com gamed: info : 用户1024丢弃装备6212"
         self.handler = LogHandler()
 
     def test_login_log(self):
@@ -166,3 +168,17 @@ class TestLogs(unittest.TestCase):
             results,
             ("2024-10-02 18:54:40", "1056", "17", "21508", "1", "750000", "98649800"),
         )
+
+    def test_drop_item(self):
+        """
+        Test if the drop item log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.drop_item)
+        self.assertEqual(results, ("2024-09-22 13:31:20", "1072", "1", "154"))
+
+    def test_drop_equipment(self):
+        """
+        Test if the drop equipment log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.drop_equipament)
+        self.assertEqual(results, ("2024-10-06 22:14:40", "1024", "6212"))
