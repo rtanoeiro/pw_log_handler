@@ -37,6 +37,7 @@ class TestLogs(unittest.TestCase):
         self.gshop_purchase = "2024-10-02 18:54:40 pwtestes.com gamed: notice : formatlog:gshop_trade:userid=1056:db_magic_number=1056:order_id=17:item_id=21508:expire=1730501681:item_count=1:cash_need=750000:cash_left=98649800:guid1=0:guid2=0"
         self.drop_item = "2024-09-22 13:31:20 pwtestes.com gamed: info : 用户1072丢弃包裹1个154"
         self.drop_equipament = "2024-10-06 22:14:40 pwtestes.com gamed: info : 用户1024丢弃装备6212"
+        self.discard_money = "2024-10-10 17:27:46 pwtestes.com gamed: info : 用户1024丢弃金钱200000"
         self.handler = LogHandler()
 
     def test_login_log(self):
@@ -182,3 +183,12 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.drop_equipament)
         self.assertEqual(results, ("2024-10-06 22:14:40", "1024", "6212"))
+
+    def test_discard_money(self):
+        """
+        Test if the discard money log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.discard_money)
+        self.assertEqual(results, ("2024-10-10 17:27:46", "1024", "200000"))
+
+        
