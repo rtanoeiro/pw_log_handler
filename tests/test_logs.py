@@ -31,6 +31,7 @@ class TestLogs(unittest.TestCase):
         )
         self.join_party = "2024-09-27 15:46:15 pwtestes.com gamed: info : 用户1184成为队员(1104,1727463280)"
         self.leave_party = "2024-09-27 16:08:46 pwtestes.com gamed: info : 用户1104脱离队伍(1104,1727463280)"
+        self.kill_person = "2024-10-06 20:43:36 pwtestes.com gamed: notice : formatlog:die:roleid=1041:type=258:attacker=1024"
         self.handler = LogHandler()
 
     def test_exp_sp_log(self):
@@ -131,3 +132,10 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.leave_party)
         self.assertEqual(results, ("2024-09-27 16:08:46", "1104", "1104"))
+
+    def test_kill_person(self):
+        """
+        Test if the kill person log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.kill_person)
+        self.assertEqual(results, ("2024-10-06 20:43:36", "1041", "1024"))
