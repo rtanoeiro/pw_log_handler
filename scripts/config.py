@@ -54,7 +54,7 @@ REGEX_PATTERNS = {
     "moveToPlayer": "GM %d moved to player %d at position (%f, %f, %f).",
     "movePlayer": "GM %d moved player %d to position (%f, %f, %f).",
     "command": "The GM with Role ID %d executed internal command %d.",
-    "process_mine": r"用户(\d+)采集得到(\d+)个(\d+)",
+    "process_mine": r"(\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) .*? 用户(\d+)采集得到(\d+)个(\d+)",
     "process_create_faction": r"roleid=(\d+):factionid=(\d+)",
     "process_upgrade_faction": r"factionid=(\d+):master=(\d+):money=(\d+):level=(\d+)",
     "deleteFaction": "(Action type: %s) An attempt to delete the faction ID %d was detected!",
