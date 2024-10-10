@@ -131,6 +131,7 @@ class LogHandler:
         elif "CheckDeliverTask" in log_line:
             print(f"Role ID {roleid} received task ID {taskid} at {date_time}")
             return date_time, roleid, taskid, "receive"
+        # TODO: Find a better method to give correct func name
         elif "DeliverItem" in log_line:
             return self.process_task_receive_item(log_line, function="process_task_receive_item")
         elif "DeliverByAwardData" in log_line:
