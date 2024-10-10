@@ -6,12 +6,12 @@ LOG_PATTERNS = {
     "formatlog:sendmail": "processSendMail",
     "formatlog:rolelogin": "process_login", # done
     "formatlog:rolelogout": "process_logout", # done
-    "formatlog:trade": "processTrade",
+    "formatlog:trade": "processTrade", # Waiting for log line
     "formatlog:task": "process_task",  # done
     "formatlog:die": "process_kill_person",  # done
     "formatlog:faction": "process_create_faction",  # done
     "formatlog:upgradefaction": "process_upgrade_faction",  # done
-    "formatlog:gshop_trade": "processGShopTrade",
+    "formatlog:gshop_trade": "process_gshop_trade",  # done
     "建立了队伍": "process_create_party",
     "成为队员": "process_join_party", # done
     "脱离队伍": "process_leave_party", # done
@@ -90,6 +90,6 @@ REGEX_PATTERNS = {
     "receiveItemFromTask": "The Role ID %d received %d unit(s) of the item ID %d from the task ID %d",
     "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",
     "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
-    "gShopTrade": "User ID %d performed a trade with the following details: Magic Number: %d, Order ID: %d, Item ID: %d, Expire: %d, Item Count: %d, Cash Needed: %d, Cash Left: %d, GUID 1: %d, GUID 2: %d",
+    "process_gshop_trade": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):.*order_id=(\d+):item_id=(\d+):.*item_count=(\d+):cash_need=(\d+):cash_left=(\d+)",
     "process_exp_sp": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)得到经验 (\d+)/(\d+)",
 }

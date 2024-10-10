@@ -319,7 +319,27 @@ class LogHandler:
 
         return date_time, killer, victim
 
+    def process_gshop_trade(self, log_line: str, function:str):
+        """
+        Function called when the player trades in the gshop
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            itemid = matches.group(3)
+            item_count = matches.group(4)
+            price = matches.group(5)
+            cash_needed = matches.group(6)
+            cash_left = matches.group(7)
+        print(f"Role ID {roleid} traded {item_count} unit(s) of item ID {itemid} for {price} at {date_time}, cash used: {cash_needed}, cash left: {cash_left}")
 
+        return date_time, roleid, itemid, item_count, price, cash_needed, cash_left
+                            
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
         log_handler = LogHandler()

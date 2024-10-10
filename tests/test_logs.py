@@ -34,6 +34,7 @@ class TestLogs(unittest.TestCase):
         self.join_party = "2024-09-27 15:46:15 pwtestes.com gamed: info : 用户1184成为队员(1104,1727463280)"
         self.leave_party = "2024-09-27 16:08:46 pwtestes.com gamed: info : 用户1104脱离队伍(1104,1727463280)"
         self.kill_person = "2024-10-06 20:43:36 pwtestes.com gamed: notice : formatlog:die:roleid=1041:type=258:attacker=1024"
+        self.gshop_purchase = "2024-10-02 18:54:40 pwtestes.com gamed: notice : formatlog:gshop_trade:userid=1056:db_magic_number=1056:order_id=17:item_id=21508:expire=1730501681:item_count=1:cash_need=750000:cash_left=98649800:guid1=0:guid2=0"
         self.handler = LogHandler()
 
     def test_login_log(self):
@@ -155,3 +156,13 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.kill_person)
         self.assertEqual(results, ("2024-10-06 20:43:36", "1041", "1024"))
+
+    def test_gshop_purchase(self):
+        """
+        Test if the gshop purchase log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.gshop_purchase)
+        self.assertEqual(
+            results,
+            ("2024-10-02 18:54:40", "1056", "17", "21508", "1", "750000", "98649800"),
+        )
