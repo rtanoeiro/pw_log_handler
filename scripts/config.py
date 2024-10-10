@@ -35,11 +35,6 @@ LOG_PATTERNS = {
     "得到经验": "process_exp_sp",  # done
 }
 
-TASK_PATTERNS = {
-    "DeliverItem": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?Item id\s*=\s*(\d+),\s*Count\s*=\s*(\d+)",
-    "DeliverByAwardData": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
-}
-
 REGEX_PATTERNS = {
     "startActivity": "GM %d started the activity %d.",
     "stopActivity": "GM %d stopped the activity %d.",
@@ -87,8 +82,8 @@ REGEX_PATTERNS = {
     "sellItem": "The Role ID %d sold %d unit(s) of the item ID: %d to a NPC",
     "getMoney": "The Role ID %d received %d money",
     "process_task": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+)",
-    "receiveItemFromTask": "The Role ID %d received %d unit(s) of the item ID %d from the task ID %d",
-    "receiveTaskReward": "The Role ID %d completed the task ID %d and received as reward: gold = %d, exp = %d, sp = %d, reputation = %d",
+    "process_task_receive_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*Item id = (\d+), Count = (\d+)",
+    "process_task_receive_reward": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
     "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
     "process_gshop_trade": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):.*order_id=(\d+):item_id=(\d+):.*item_count=(\d+):cash_need=(\d+):cash_left=(\d+)",
     "process_exp_sp": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)得到经验 (\d+)/(\d+)",

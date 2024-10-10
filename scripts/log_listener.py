@@ -4,7 +4,7 @@ import re
 import sys
 from typing import Any
 
-from scripts.config import LOG_PATTERNS, REGEX_PATTERNS, TASK_PATTERNS
+from scripts.config import LOG_PATTERNS, REGEX_PATTERNS
 
 
 class LogHandler:
@@ -17,7 +17,6 @@ class LogHandler:
     def __init__(self) -> None:
         self.log_patterns = LOG_PATTERNS
         self.regex_patterns = REGEX_PATTERNS
-        self.task_patterns = TASK_PATTERNS
 
     def process_log_line(self, log_line: str) -> tuple[Any] | None:
         """
@@ -133,29 +132,32 @@ class LogHandler:
             print(f"Role ID {roleid} received task ID {taskid} at {date_time}")
             return date_time, roleid, taskid, "receive"
         elif "DeliverItem" in log_line:
-            return self.process_task_give_item(log_line, roleid, taskid)
+            return self.process_task_receive_item(log_line, function="process_task_receive_item")
         elif "DeliverByAwardData" in log_line:
-            return self.process_task_receive_reward(log_line, roleid, taskid)
+            return self.process_task_receive_reward(log_line, function="process_task_receive_reward")
 
-    def process_task_give_item(self, log_line: str, roleid: str, taskid: str):
+    def process_task_receive_item(self, log_line: str, function: str):
         """
         Function called when the player gives up on a task
         Arguments:
             log_line -- Log Line
             function -- Log Line called, it's used to get the regex pattern
         """
-        regex = self.task_patterns["DeliverItem"]
+
+        regex = self.regex_patterns[function]
         matches = re.search(regex, log_line)
         if matches:
             date_time = matches.group(1)
-            itemid = matches.group(2)
-            item_count = matches.group(3)
+            roleid = matches.group(2)
+            taskid = matches.group(3)
+            itemid = matches.group(4)
+            item_count = matches.group(5)
         print(
-            f"Role ID {roleid} received {item_count} units of item ID {itemid} from task ID {taskid}"
+            f"Role ID {roleid} received {item_count} units of item ID {itemid} from task ID {taskid} at {date_time}"
         )
         return date_time, roleid, taskid, itemid, item_count
 
-    def process_task_receive_reward(self, log_line: str, roleid: str, taskid: str):
+    def process_task_receive_reward(self, log_line: str, function: str):
         """
         Function called when the player receives an item via task
         Arguments:
@@ -163,14 +165,16 @@ class LogHandler:
             roleid -- Role that received item
             taskid -- Task that gave item
         """
-        regex = self.task_patterns["DeliverByAwardData"]
+        regex = self.regex_patterns[function]
         matches = re.search(regex, log_line)
         if matches:
             date_time = matches.group(1)
-            gold = matches.group(2)
-            exp = matches.group(3)
-            sp = matches.group(4)
-            reputation = matches.group(5)
+            roleid = matches.group(2)
+            taskid = matches.group(3)
+            gold = matches.group(4)
+            exp = matches.group(5)
+            sp = matches.group(6)
+            reputation = matches.group(7)
         print(
             f"Role ID {roleid} completed the task ID {taskid} and received as reward: gold = {gold}, exp = {exp}, sp = {sp}, reputation = {reputation}"
         )
