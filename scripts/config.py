@@ -30,7 +30,7 @@ LOG_PATTERNS = {
     "采集得到": "process_mine",  # done
     "孵化了宠物蛋": "processPetEggHatch",
     "还原了宠物蛋": "processPetEggRestore",
-    "组队拣起用户": "pickupTeamMoney",
+    "组队拣起用户": "pickupTeamMoney", # Waiting for log line
     "得到经验": "process_exp_sp",  # done
 }
 
