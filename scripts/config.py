@@ -19,8 +19,8 @@ LOG_PATTERNS = {
     "丢弃装备": "process_drop_equipment",  # done
     "拣起金钱": "process_pick_up_money",  # done
     "丢弃金钱": "process_discard_money",  # done
-    "卖店": "process_sell_item",
-    "得到金钱": "processGetMoney",
+    "卖店": "process_sell_item", #done
+    "得到金钱": "process_receive_money", # done
     "拣起": "processPickupItem",
     "升级到": "processLevelUp",
     "花掉金钱": "processSpendMoney",
@@ -78,7 +78,7 @@ REGEX_PATTERNS = {
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
     "process_discard_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃金钱(\d+)",
     "process_sell_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)卖店(\d+)个(\d+)",
-    "getMoney": "The Role ID %d received %d money",
+    "process_receive_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)得到金钱(\d+)",
     "process_task": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+)",
     "process_task_receive_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*Item id = (\d+), Count = (\d+)",
     "process_task_receive_reward": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
