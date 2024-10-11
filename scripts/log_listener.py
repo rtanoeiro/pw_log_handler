@@ -451,6 +451,24 @@ class LogHandler:
 
         return date_time, roleid, item_count, itemid
 
+    def process_level_up(self, log_line: str, function: str):
+        """
+        Function called when the player levels up
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            level = matches.group(3)
+            _ = matches.group(4)
+            playtime = matches.group(5)
+        print(f"Role ID {roleid} leveled up to {level} at {date_time} after playing for {playtime} minutes")
+
+        return date_time, roleid, level, playtime
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:

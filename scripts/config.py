@@ -22,7 +22,7 @@ LOG_PATTERNS = {
     "卖店": "process_sell_item", #done
     "得到金钱": "process_receive_money", # done
     "拣起": "process_pick_item", # done
-    "升级到": "processLevelUp",
+    "升级到": "process_level_up", # done
     "花掉金钱": "processSpendMoney",
     "消耗了sp": "processSpConsume",
     "技能": "processSkillLevelUp",
@@ -72,7 +72,7 @@ REGEX_PATTERNS = {
     "process_login": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+)",
     "process_drop_equipment": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃装备(\d+)",
     "process_drop_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃包裹(\d+)个(\d+)",
-    "process_pick_item":  r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)拣起(\d+)个(\d+)",
+    "process_pick_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)拣起(\d+)个(\d+)",
     "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
     "trade": "Role %d traded with role %d. Money exchanged: %d from role %d and %d from role %d. Role %d traded %s items. And Role %d traded %s items.",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
@@ -82,7 +82,7 @@ REGEX_PATTERNS = {
     "process_task": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+)",
     "process_task_receive_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*Item id = (\d+), Count = (\d+)",
     "process_task_receive_reward": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):taskid=(\d+).*gold\s*=\s*(\d+),\s*exp\s*=\s*(\d+),\s*sp\s*=\s*(\d+),\s*reputation\s*=\s*(\d+)",
-    "levelUp": "The Role ID %d leveled up to level %d. Current money: %s. Playtime: %s.",
+    "process_level_up": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)升级到(\d+)级金钱(\d+),游戏时间(\d+:\d{2}:\d{2})",
     "process_gshop_trade": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):.*order_id=(\d+):item_id=(\d+):.*item_count=(\d+):cash_need=(\d+):cash_left=(\d+)",
     "process_exp_sp": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)得到经验 (\d+)/(\d+)",
 }
