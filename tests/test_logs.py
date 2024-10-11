@@ -40,6 +40,8 @@ class TestLogs(unittest.TestCase):
         self.discard_money = "2024-10-10 17:27:46 pwtestes.com gamed: info : 用户1024丢弃金钱200000"
         self.sell_item = "2024-09-22 01:41:36 pwtestes.com gamed: info : 用户1029卖店1个154"
         self.receive_money = "2024-09-22 03:33:47 pwtestes.com gamed: info : 用户1088得到金钱26"
+        self.spend_money = "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088花掉金钱0"
+        self.spend_sp = "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088消耗了sp 800"
         self.pickup_item = "2024-09-22 03:37:29 pwtestes.com gamed: info : 用户1088拣起100个410"
         self.level_up = "2024-09-22 03:41:52 pwtestes.com gamed: info : 用户1088升级到9级金钱4425,游戏时间2:01:46"
         self.handler = LogHandler()
@@ -222,3 +224,17 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.level_up)
         self.assertEqual(results, ("2024-09-22 03:41:52", "1088", "9", "2:01:46"))
+
+    def test_spend_money(self):
+        """
+        Test if the spend money log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.spend_money)
+        self.assertEqual(results, ("2024-09-22 03:49:15", "1088", "0"))
+
+    def test_spend_sp(self):
+        """
+        Test if the spend sp log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.spend_sp)
+        self.assertEqual(results, ("2024-09-22 03:49:15", "1088", "800"))
