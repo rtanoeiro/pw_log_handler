@@ -504,6 +504,23 @@ class LogHandler:
 
         return date_time, roleid, sp
     
+    def process_upgrade_skill(self, log_line: str, function: str):
+        """
+        Function called when the player upgrades a skill
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            skillid = matches.group(3)
+            level = matches.group(4)
+        print(f"Role ID {roleid} upgraded skill ID {skillid} to level {level} at {date_time}")
+
+        return date_time, roleid, skillid, level
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
         log_handler = LogHandler()

@@ -19,13 +19,13 @@ LOG_PATTERNS = {
     "丢弃装备": "process_drop_equipment",  # done
     "拣起金钱": "process_pick_up_money",  # done
     "丢弃金钱": "process_discard_money",  # done
-    "卖店": "process_sell_item", #done
-    "得到金钱": "process_receive_money", # done
-    "拣起": "process_pick_item", # done
-    "升级到": "process_level_up", # done
-    "花掉金钱": "process_spend_money",
-    "消耗了sp": "process_spend_sp",
-    "技能": "processSkillLevelUp",
+    "卖店": "process_sell_item",  # done
+    "得到金钱": "process_receive_money",  # done
+    "拣起": "process_pick_item",  # done
+    "升级到": "process_level_up",  # done
+    "花掉金钱": "process_spend_money",  # done
+    "消耗了sp": "process_spend_sp",  # done
+    "技能": "process_upgrade_skill", # done
     "制造了": "process_craft_item",  # done
     "采集得到": "process_mine",  # done
     "孵化了宠物蛋": "processPetEggHatch",
@@ -66,7 +66,7 @@ REGEX_PATTERNS = {
     "process_kill_person": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):type=258:.*attacker=(\d+)",
     "process_spend_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)花掉金钱(\d+)",
     "process_spend_sp": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)消耗了sp (\d+)",
-    "skillLevelUp": "The Role ID %d leveled up the skill ID %d to level %d.",
+    "process_upgrade_skill": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)技能(\d+)达到(\d+)级",
     "sendMail": "Timestamp: %d, The Role ID %d just sent a mail to role ID %d. Mail ID: %d. Mail size: %d. Money sent: %d. Item ID: %d. Item count: %d. Mail position: %d.",
     "process_logout": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+):.*time=(\d+)",
     "process_login": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+)",
