@@ -521,6 +521,8 @@ class LogHandler:
         print(f"Role ID {roleid} upgraded skill ID {skillid} to level {level} at {date_time}")
 
         return date_time, roleid, skillid, level
+
+
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
         log_handler = LogHandler()
