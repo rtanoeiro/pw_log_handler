@@ -40,6 +40,7 @@ class TestLogs(unittest.TestCase):
         self.discard_money = "2024-10-10 17:27:46 pwtestes.com gamed: info : 用户1024丢弃金钱200000"
         self.sell_item = "2024-09-22 01:41:36 pwtestes.com gamed: info : 用户1029卖店1个154"
         self.receive_money = "2024-09-22 03:33:47 pwtestes.com gamed: info : 用户1088得到金钱26"
+        self.pickup_item = "2024-09-22 03:37:29 pwtestes.com gamed: info : 用户1088拣起100个410"
         self.handler = LogHandler()
 
     def test_login_log(self):
@@ -206,3 +207,10 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.receive_money)
         self.assertEqual(results, ("2024-09-22 03:33:47", "1088", "26"))
+
+    def test_pickup_item(self):
+        """
+        Test if the pickup item log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.pickup_item)
+        self.assertEqual(results, ("2024-09-22 03:37:29", "1088", "100", "410"))

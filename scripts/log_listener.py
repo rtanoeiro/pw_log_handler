@@ -433,6 +433,25 @@ class LogHandler:
 
         return date_time, roleid, money
 
+    def process_pick_item(self, log_line: str, function: str):
+        """
+        Function called when the player picks up an item
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            item_count = matches.group(3)
+            itemid = matches.group(4)
+        print(f"Role ID {roleid} picked up {item_count} item ID {itemid} at {date_time}")
+
+        return date_time, roleid, item_count, itemid
+
+
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
         log_handler = LogHandler()

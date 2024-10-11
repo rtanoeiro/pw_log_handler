@@ -21,7 +21,7 @@ LOG_PATTERNS = {
     "丢弃金钱": "process_discard_money",  # done
     "卖店": "process_sell_item", #done
     "得到金钱": "process_receive_money", # done
-    "拣起": "processPickupItem",
+    "拣起": "process_pick_item", # done
     "升级到": "processLevelUp",
     "花掉金钱": "processSpendMoney",
     "消耗了sp": "processSpConsume",
@@ -72,7 +72,7 @@ REGEX_PATTERNS = {
     "process_login": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*userid=(\d+):roleid=(\d+)",
     "process_drop_equipment": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃装备(\d+)",
     "process_drop_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃包裹(\d+)个(\d+)",
-    "pickupItem": "The Role ID %d picked up %d unit(s) of item %d (discarded by role ID %d)",
+    "process_pick_item":  r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)拣起(\d+)个(\d+)",
     "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
     "trade": "Role %d traded with role %d. Money exchanged: %d from role %d and %d from role %d. Role %d traded %s items. And Role %d traded %s items.",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
