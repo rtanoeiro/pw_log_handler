@@ -3,7 +3,8 @@
 LOG_PATTERNS = {
     "GM:": "processGMActions",
     "chat :": "processChat",
-    "formatlog:sendmail": "processSendMail",  # Waiting for log line
+    "formatlog:sendmail": "processSendMail",
+    # Missing added auction itens and purchase from auction
     "formatlog:rolelogin": "process_login",  # done
     "formatlog:rolelogout": "process_logout",  # done
     "formatlog:trade": "process_trade",  # done
@@ -56,7 +57,6 @@ REGEX_PATTERNS = {
     "process_promote_in_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?type=promote:superior=(\d+):roleid=(\d+):factionid=(\d+):role=(\d+)",
     "process_leave_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?type=leave:roleid=(\d+):factionid=(\d+):role=\d+",
     "process_delete_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?type=delete:factionid=(\d+)",
-    "pickupTeamMoney": "Role ID %d picked up money (%d) dropped by Role ID %d they both were in a Party.",
     "process_create_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)建立了队伍\((\d+),\d+\)",
     "process_join_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)成为队员\((\d+),\d+\)",
     "process_leave_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)脱离队伍\((\d+),\d+\)",
@@ -79,6 +79,7 @@ REGEX_PATTERNS = {
     "process_trade_submit": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*rid=(\d+),A:(\d+),B:(\d+),.*tid=(\d+)",
     "process_trade_save": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*tid=(\d+),\(Trader:(\d+),(\d+)\)",
     # Missing trading cancel?
+    "pickupTeamMoney": "Role ID %d picked up money (%d) dropped by Role ID %d they both were in a Party.",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
     "process_discard_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃金钱(\d+)",
     "process_sell_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)卖店(\d+)个(\d+)",
