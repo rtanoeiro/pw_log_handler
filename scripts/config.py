@@ -75,8 +75,10 @@ REGEX_PATTERNS = {
     "process_pick_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)拣起(\d+)个(\d+)",
     "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
     "process_trade_add_itens": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+),goods is \(id=(\d+),pos=\d+,count=(\d+)\),money=(\d+),tid=(\d+)",
+    "process_trade_remove_itens": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) .*? roleid=(\d+),item \(id=(\d+),pos=\d+,count=(\d+)\),money=(\d+),tid=(\d+)",
     "process_trade_submit": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*rid=(\d+),A:(\d+),B:(\d+),.*tid=(\d+)",
     "process_trade_save": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*tid=(\d+),\(Trader:(\d+),(\d+)\)",
+    # Missing trading cancel?
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
     "process_discard_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃金钱(\d+)",
     "process_sell_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)卖店(\d+)个(\d+)",

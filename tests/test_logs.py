@@ -67,6 +67,7 @@ class TestLogs(unittest.TestCase):
             "2024-09-24 18:56:58 pwtestes.com gamed: info : 用户1104孵化了宠物蛋31096"
         )
         self.add_trade_itens = "2024-10-11 06:35:02 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:tradeaddgoods: roleid=1088,goods is (id=8103,pos=15,count=1),money=0,tid=1"
+        self.remove_trade_itens = "2024-10-12 01:06:23 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:traderemovegoods: roleid=1024,item (id=5029,pos=25,count=1),money=0,tid=1"
         self.trade_submit = "2024-10-11 06:35:10 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:tradesubmit,rid=1088,A:1024,B:1088,retcode=76,tid=1"
         self.trade_save = "2024-10-11 06:35:16 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:TradeSave:Trade done. tid=1,(Trader:1024,1088)"
         self.handler = LogHandler()
@@ -285,6 +286,15 @@ class TestLogs(unittest.TestCase):
         results = self.handler.process_log_line(self.add_trade_itens)
         self.assertEqual(
             results, ("2024-10-11 06:35:02", "1088", "8103", "1", "0", "1")
+        )
+
+    def test_remove_trade_itens(self):
+        """
+        Test if the remove trade itens log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.remove_trade_itens)
+        self.assertEqual(
+            results, ("2024-10-12 01:06:23", "1024", "5029", "1", "0", "1")
         )
 
     def test_trade_submit(self):
