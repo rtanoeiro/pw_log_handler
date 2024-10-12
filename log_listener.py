@@ -4,7 +4,7 @@ import re
 import sys
 from typing import Any
 
-from scripts.config import LOG_PATTERNS, REGEX_PATTERNS
+from config import LOG_PATTERNS, REGEX_PATTERNS
 
 
 class LogHandler:
@@ -224,6 +224,33 @@ class LogHandler:
             )
             return date_time, roleid, item_count, itemid, recipe
 
+    def process_faction(self, log_line: str, function: str):
+        """
+        Function called when the player interacts with factions
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+
+        if "type=create" in log_line:
+            return self.process_create_faction(
+                log_line, function="process_create_faction"
+            )
+        elif "type=join" in log_line:
+            return self.process_join_faction(log_line, function="process_join_faction")
+        elif "type=promote" in log_line:
+            return self.process_promote_in_faction(
+                log_line, function="process_promote_in_faction"
+            )
+        elif "type=leave" in log_line:
+            return self.process_leave_faction(
+                log_line, function="process_leave_faction"
+            )
+        if "type=delete" in log_line:
+            return self.process_delete_faction(
+                log_line, function="process_delete_faction"
+            )
+
     def process_create_faction(self, log_line: str, function: str):
         """
         Function called when the player creates a faction
@@ -239,6 +266,95 @@ class LogHandler:
             factionid = matches.group(3)
             print(f"Role ID {roleid} created faction ID {factionid} at {date_time}")
             return date_time, roleid, factionid
+
+    def process_join_faction(self, log_line: str, function: str):
+        """
+        Function called when the player joins a faction
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        print(f"Regex: {regex}")
+        if matches:
+            print(f"MATCHES: {matches} \n\n\n\n")
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            factionid = matches.group(3)
+            print(f"Role ID {roleid} joined faction ID {factionid} at {date_time}")
+            return date_time, roleid, factionid
+
+    def process_promote_in_faction(self, log_line: str, function: str):
+        """
+        Function called when the player promotes a role in a faction
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            superior = matches.group(2)
+            roleid = matches.group(3)
+            factionid = matches.group(4)
+            role = matches.group(5)
+            new_role = self.get_role_name(role)
+            print(
+                f"Role ID {superior} promoted Role ID {roleid} to role {role} in faction ID {factionid} at {date_time}"
+            )
+            return date_time, superior, roleid, factionid, role, new_role
+
+    def get_role_name(self, role: str) -> str:
+        """
+        Function to get the role name based on the role id
+        Arguments:
+            role -- Role ID
+        """
+
+        if role == "2":
+            return "Marechal"
+        elif role == "3":
+            return "General"
+        elif role == "4":
+            return "Major"
+        elif role == "5":
+            return "Capitão"
+        elif role == "6":
+            return "Membro"
+        return "Unknown"
+
+    def process_leave_faction(self, log_line: str, function: str):
+        """
+        Function called when the player deletes a role from a faction
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            factionid = matches.group(3)
+            print(f"Role ID {roleid} left faction ID {factionid} at {date_time}")
+            return date_time, roleid, factionid
+
+    def process_delete_faction(self, log_line: str, function: str):
+        """
+        Function called when the player deletes a faction
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            factionid = matches.group(2)
+            print(f"Faction ID {factionid} was deleted at {date_time}")
+            return date_time, factionid
 
     def process_upgrade_faction(self, log_line: str, function: str):
         """

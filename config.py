@@ -9,7 +9,7 @@ LOG_PATTERNS = {
     "formatlog:trade": "process_trade",  # done
     "formatlog:task": "process_task",  # done
     "formatlog:die": "process_kill_person",  # done
-    "formatlog:faction": "process_create_faction",  # done
+    "formatlog:faction": "process_faction",  # done
     "formatlog:upgradefaction": "process_upgrade_faction",  # done
     "formatlog:gshop_trade": "process_gshop_trade",  # done
     "建立了队伍": "process_create_party",  # done
@@ -48,14 +48,14 @@ REGEX_PATTERNS = {
     "moveToPlayer": "GM %d moved to player %d at position (%f, %f, %f).",
     "movePlayer": "GM %d moved player %d to position (%f, %f, %f).",
     "command": "The GM with Role ID %d executed internal command %d.",
+    # Missing kicking from faction?
     "process_mine": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*? 用户(\d+)采集得到(\d+)个(\d+)",
     "process_create_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):factionid=(\d+)",
     "process_upgrade_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?factionid=(\d+):master=(\d+):money=(\d+):level=(\d+)",
-    "deleteFaction": "(Action type: %s) An attempt to delete the faction ID %d was detected!",
-    "joinFaction": "(Type: %s) The Role ID %d joined the Faction ID %d",
-    "promoteRoleInFaction": "(Type: %s) The Role ID %d was promoted by his superior (ID %d) in Faction ID %d. New position: %d",
-    "deleteRoleFromFaction": "(Type: %s) Role with ID %d was deleted from Faction ID %d. Role: %d",
-    "leaveFaction": "(Type: %s) The Role ID %d just left the Faction ID %d, his position was: %d",
+    "process_join_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s.*roleid=(?P<roleid>\d+):factionid=(?P<factionid>\d+)",
+    "process_promote_in_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?type=promote:superior=(\d+):roleid=(\d+):factionid=(\d+):role=(\d+)",
+    "process_leave_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?type=leave:roleid=(\d+):factionid=(\d+):role=\d+",
+    "process_delete_faction": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?type=delete:factionid=(\d+)",
     "pickupTeamMoney": "Role ID %d picked up money (%d) dropped by Role ID %d they both were in a Party.",
     "process_create_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)建立了队伍\((\d+),\d+\)",
     "process_join_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)成为队员\((\d+),\d+\)",
