@@ -6,7 +6,7 @@ LOG_PATTERNS = {
     "formatlog:sendmail": "processSendMail",  # Waiting for log line
     "formatlog:rolelogin": "process_login",  # done
     "formatlog:rolelogout": "process_logout",  # done
-    "formatlog:trade": "processTrade",  # Waiting for log line
+    "formatlog:trade": "process_trade",  # done
     "formatlog:task": "process_task",  # done
     "formatlog:die": "process_kill_person",  # done
     "formatlog:faction": "process_create_faction",  # done
@@ -74,7 +74,9 @@ REGEX_PATTERNS = {
     "process_drop_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃包裹(\d+)个(\d+)",
     "process_pick_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)拣起(\d+)个(\d+)",
     "purchaseFromAuction": "The Role ID %d purchased %d item(s) from gshop, spent %d unit(s) of cash, remaining balance: %d",
-    "trade": "Role %d traded with role %d. Money exchanged: %d from role %d and %d from role %d. Role %d traded %s items. And Role %d traded %s items.",
+    "process_trade_add_itens": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+),goods is \(id=(\d+),pos=\d+,count=(\d+)\),money=(\d+),tid=(\d+)",
+    "process_trade_submit": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*rid=(\d+),A:(\d+),B:(\d+),.*tid=(\d+)",
+    "process_trade_save": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*tid=(\d+),\(Trader:(\d+),(\d+)\)",
     "process_pick_up_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)拣起金钱(\d+)",
     "process_discard_money": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)丢弃金钱(\d+)",
     "process_sell_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)卖店(\d+)个(\d+)",

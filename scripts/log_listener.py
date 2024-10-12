@@ -486,7 +486,7 @@ class LogHandler:
         print(f"Role ID {roleid} spent {money} money at {date_time}")
 
         return date_time, roleid, money
-    
+
     def process_spend_sp(self, log_line: str, function: str):
         """
         Function called when the player spends sp
@@ -503,7 +503,7 @@ class LogHandler:
         print(f"Role ID {roleid} spent {sp} SP at {date_time}")
 
         return date_time, roleid, sp
-    
+
     def process_upgrade_skill(self, log_line: str, function: str):
         """
         Function called when the player upgrades a skill
@@ -538,6 +538,81 @@ class LogHandler:
         print(f"Role ID {roleid} hatched egg ID {eggid} at {date_time}")
 
         return date_time, roleid, eggid
+
+    def process_trade(self, log_line: str, function: str):
+        """
+        Function called when the player trades with another player
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+
+        if "tradeaddgoods" in log_line:
+            return self.process_trade_add_itens(log_line, function="process_trade_add_itens")
+        elif "tradesubmit" in log_line:
+            return self.process_trade_submit(log_line, function="process_trade_submit")
+        elif "TradeSave" in log_line:
+            return self.process_trade_save(log_line, function="process_trade_save")
+
+    def process_trade_add_itens(self, log_line: str, function: str):
+        """
+        Function called when the player adds items to the trade window
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            itemid = matches.group(3)
+            item_count = matches.group(4)
+            money = matches.group(5)
+            trade_id = matches.group(6)
+        print(f"Role ID {roleid} added {item_count} unit(s) of item ID {itemid} to trade ID {trade_id} at {date_time}")
+
+        return date_time, roleid, itemid, item_count, money, trade_id
+
+    def process_trade_submit(self, log_line: str, function: str):
+        """
+        Function called when the player submits the trade
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            role_id = matches.group(2)
+            roleid_a = matches.group(3)
+            roleid_b = matches.group(4)
+            trade_id = matches.group(5)
+        print(f"Role ID {roleid_a} submitted the trade with Role ID {roleid_b} at {date_time}")
+
+        return date_time, role_id, roleid_a, roleid_b, trade_id
+
+    def process_trade_save(self, log_line: str, function: str):
+        """
+        Function called when the player saves the trade
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            trade_id = matches.group(2)
+            roleid_a = matches.group(3)
+            roleid_b = matches.group(4)
+        print(f"Trade ID {trade_id} was saved by Role ID {roleid_a} and Role ID {roleid_b} at {date_time}")
+
+        return date_time, trade_id, roleid_a, roleid_b
+
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:

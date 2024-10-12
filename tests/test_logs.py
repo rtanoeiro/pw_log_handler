@@ -35,17 +35,40 @@ class TestLogs(unittest.TestCase):
         self.leave_party = "2024-09-27 16:08:46 pwtestes.com gamed: info : 用户1104脱离队伍(1104,1727463280)"
         self.kill_person = "2024-10-06 20:43:36 pwtestes.com gamed: notice : formatlog:die:roleid=1041:type=258:attacker=1024"
         self.gshop_purchase = "2024-10-02 18:54:40 pwtestes.com gamed: notice : formatlog:gshop_trade:userid=1056:db_magic_number=1056:order_id=17:item_id=21508:expire=1730501681:item_count=1:cash_need=750000:cash_left=98649800:guid1=0:guid2=0"
-        self.drop_item = "2024-09-22 13:31:20 pwtestes.com gamed: info : 用户1072丢弃包裹1个154"
-        self.drop_equipament = "2024-10-06 22:14:40 pwtestes.com gamed: info : 用户1024丢弃装备6212"
-        self.discard_money = "2024-10-10 17:27:46 pwtestes.com gamed: info : 用户1024丢弃金钱200000"
-        self.sell_item = "2024-09-22 01:41:36 pwtestes.com gamed: info : 用户1029卖店1个154"
-        self.receive_money = "2024-09-22 03:33:47 pwtestes.com gamed: info : 用户1088得到金钱26"
-        self.spend_money = "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088花掉金钱0"
-        self.spend_sp = "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088消耗了sp 800"
-        self.pickup_item = "2024-09-22 03:37:29 pwtestes.com gamed: info : 用户1088拣起100个410"
+        self.drop_item = (
+            "2024-09-22 13:31:20 pwtestes.com gamed: info : 用户1072丢弃包裹1个154"
+        )
+        self.drop_equipament = (
+            "2024-10-06 22:14:40 pwtestes.com gamed: info : 用户1024丢弃装备6212"
+        )
+        self.discard_money = (
+            "2024-10-10 17:27:46 pwtestes.com gamed: info : 用户1024丢弃金钱200000"
+        )
+        self.sell_item = (
+            "2024-09-22 01:41:36 pwtestes.com gamed: info : 用户1029卖店1个154"
+        )
+        self.receive_money = (
+            "2024-09-22 03:33:47 pwtestes.com gamed: info : 用户1088得到金钱26"
+        )
+        self.spend_money = (
+            "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088花掉金钱0"
+        )
+        self.spend_sp = (
+            "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088消耗了sp 800"
+        )
+        self.pickup_item = (
+            "2024-09-22 03:37:29 pwtestes.com gamed: info : 用户1088拣起100个410"
+        )
         self.level_up = "2024-09-22 03:41:52 pwtestes.com gamed: info : 用户1088升级到9级金钱4425,游戏时间2:01:46"
-        self.upgrade_skill = "2024-09-22 03:49:14 pwtestes.com gamed: info : 用户1088技能245达到1级"
-        self.pet_hatch = "2024-09-24 18:56:58 pwtestes.com gamed: info : 用户1104孵化了宠物蛋31096"
+        self.upgrade_skill = (
+            "2024-09-22 03:49:14 pwtestes.com gamed: info : 用户1088技能245达到1级"
+        )
+        self.pet_hatch = (
+            "2024-09-24 18:56:58 pwtestes.com gamed: info : 用户1104孵化了宠物蛋31096"
+        )
+        self.add_trade_itens = "2024-10-11 06:35:02 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:tradeaddgoods: roleid=1088,goods is (id=8103,pos=15,count=1),money=0,tid=1"
+        self.trade_submit = "2024-10-11 06:35:10 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:tradesubmit,rid=1088,A:1024,B:1088,retcode=76,tid=1"
+        self.trade_save = "2024-10-11 06:35:16 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:TradeSave:Trade done. tid=1,(Trader:1024,1088)"
         self.handler = LogHandler()
 
     def test_login_log(self):
@@ -254,3 +277,26 @@ class TestLogs(unittest.TestCase):
         """
         results = self.handler.process_log_line(self.pet_hatch)
         self.assertEqual(results, ("2024-09-24 18:56:58", "1104", "31096"))
+
+    def test_add_trade_itens(self):
+        """
+        Test if the add trade itens log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.add_trade_itens)
+        self.assertEqual(
+            results, ("2024-10-11 06:35:02", "1088", "8103", "1", "0", "1")
+        )
+
+    def test_trade_submit(self):
+        """
+        Test if the trade submit log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.trade_submit)
+        self.assertEqual(results, ("2024-10-11 06:35:10", "1088", "1024", "1088", "1"))
+
+    def test_trade_save(self):
+        """
+        Test if the trade save log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.trade_save)
+        self.assertEqual(results, ("2024-10-11 06:35:16", "1", "1024", "1088"))
