@@ -25,12 +25,12 @@ LOG_PATTERNS = {
     "升级到": "process_level_up",  # done
     "花掉金钱": "process_spend_money",  # done
     "消耗了sp": "process_spend_sp",  # done
-    "技能": "process_upgrade_skill", # done
+    "技能": "process_upgrade_skill",  # done
     "制造了": "process_craft_item",  # done
     "采集得到": "process_mine",  # done
-    "孵化了宠物蛋": "processPetEggHatch",
-    "还原了宠物蛋": "processPetEggRestore",
-    "组队拣起用户": "pickupTeamMoney", # Waiting for log line
+    "孵化了宠物蛋": "process_egg_hatch",  # done
+    "还原了宠物蛋": "processPetEggRestore",  # waiting for log line
+    "组队拣起用户": "pickupTeamMoney",  # Waiting for log line
     "得到经验": "process_exp_sp",  # done
 }
 
@@ -60,7 +60,7 @@ REGEX_PATTERNS = {
     "process_create_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)建立了队伍\((\d+),\d+\)",
     "process_join_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)成为队员\((\d+),\d+\)",
     "process_leave_party": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+)脱离队伍\((\d+),\d+\)",
-    "petEggHatch": "The Role ID %d hatched the pet egg ID %d.",
+    "process_egg_hatch": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*用户(\d+)孵化了宠物蛋(\d+)",
     "petEggRestore": "The Role ID %d restored a pet and received the pet egg ID %d.",
     "process_craft_item": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*?用户(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+).*?(\d+)",
     "process_kill_person": r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).*roleid=(\d+):type=258:.*attacker=(\d+)",

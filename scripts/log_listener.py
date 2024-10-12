@@ -522,6 +522,22 @@ class LogHandler:
 
         return date_time, roleid, skillid, level
 
+    def process_egg_hatch(self, log_line: str, function: str):
+        """
+        Function called when the player hatches an egg
+        Arguments:
+            log_line -- Log Line
+            function -- Log Line called, it's used to get the regex pattern
+        """
+        regex = self.regex_patterns[function]
+        matches = re.search(regex, log_line)
+        if matches:
+            date_time = matches.group(1)
+            roleid = matches.group(2)
+            eggid = matches.group(3)
+        print(f"Role ID {roleid} hatched egg ID {eggid} at {date_time}")
+
+        return date_time, roleid, eggid
 
 if __name__ == "__main__":
     if len(sys.argv) >= 1:

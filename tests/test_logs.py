@@ -44,7 +44,8 @@ class TestLogs(unittest.TestCase):
         self.spend_sp = "2024-09-22 03:49:15 pwtestes.com gamed: info : 用户1088消耗了sp 800"
         self.pickup_item = "2024-09-22 03:37:29 pwtestes.com gamed: info : 用户1088拣起100个410"
         self.level_up = "2024-09-22 03:41:52 pwtestes.com gamed: info : 用户1088升级到9级金钱4425,游戏时间2:01:46"
-        self.test_upgrade_skill = "2024-09-22 03:49:14 pwtestes.com gamed: info : 用户1088技能245达到1级"
+        self.upgrade_skill = "2024-09-22 03:49:14 pwtestes.com gamed: info : 用户1088技能245达到1级"
+        self.pet_hatch = "2024-09-24 18:56:58 pwtestes.com gamed: info : 用户1104孵化了宠物蛋31096"
         self.handler = LogHandler()
 
     def test_login_log(self):
@@ -244,5 +245,12 @@ class TestLogs(unittest.TestCase):
         """
         Test if the upgrade skill log line is correctly processed
         """
-        results = self.handler.process_log_line(self.test_upgrade_skill)
+        results = self.handler.process_log_line(self.upgrade_skill)
         self.assertEqual(results, ("2024-09-22 03:49:14", "1088", "245", "1"))
+
+    def test_pet_hatch(self):
+        """
+        Test if the pet hatch log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.pet_hatch)
+        self.assertEqual(results, ("2024-09-24 18:56:58", "1104", "31096"))
