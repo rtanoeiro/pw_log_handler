@@ -188,11 +188,11 @@ class TestLogs(unittest.TestCase):
         """
         Test if the get new role log line is correctly processed
         """
-        self.assertEqual(self.handler.get_role_name(2), "Marechal")
-        self.assertEqual(self.handler.get_role_name(3), "General")
-        self.assertEqual(self.handler.get_role_name(4), "Major")
-        self.assertEqual(self.handler.get_role_name(5), "Capitão")
-        self.assertEqual(self.handler.get_role_name(6), "Membro")
+        self.assertEqual(self.handler.get_role_name("2"), "Marechal")
+        self.assertEqual(self.handler.get_role_name("3"), "General")
+        self.assertEqual(self.handler.get_role_name("4"), "Major")
+        self.assertEqual(self.handler.get_role_name("5"), "Capitão")
+        self.assertEqual(self.handler.get_role_name("6"), "Membro")
 
     def test_leave_faction(self):
         """
