@@ -60,7 +60,7 @@ class LogHandler:
             userid = matches.group(2)
             roleid = matches.group(3)
             print(f"User ID {userid} with Role {roleid} logged in at {date_time}")
-        return date_time, userid, roleid
+            return date_time, userid, roleid
 
     def process_logout(self, log_line: str, function: str):
         """
@@ -76,7 +76,7 @@ class LogHandler:
             userid = matches.group(2)
             roleid = matches.group(3)
             print(f"User ID {userid} with Role {roleid} logged out at {date_time}")
-        return date_time, userid, roleid
+            return date_time, userid, roleid
 
     def process_exp_sp(self, log_line: str, function: str):
         """
@@ -94,7 +94,7 @@ class LogHandler:
             sp = matches.group(4)
             print(f"Role ID {roleid} received {exp} EXP and {sp} SP at {date_time}")
 
-        return date_time, roleid, exp, sp
+            return date_time, roleid, exp, sp
 
     def process_pick_up_money(self, log_line: str, function: str):
         """
@@ -110,7 +110,7 @@ class LogHandler:
             roleid = matches.group(2)
             money = matches.group(3)
             print(f"Role ID: {roleid} picked up {money} money at {date_time}")
-        return date_time, roleid, money
+            return date_time, roleid, money
 
     def process_task(self, log_line: str, function: str):
         """
@@ -160,7 +160,7 @@ class LogHandler:
             print(
                 f"Role ID {roleid} received {item_count} units of item ID {itemid} from task ID {taskid} at {date_time}"
             )
-        return date_time, roleid, taskid, itemid, item_count
+            return date_time, roleid, taskid, itemid, item_count
 
     def process_task_receive_reward(self, log_line: str, function: str):
         """
@@ -183,7 +183,7 @@ class LogHandler:
             print(
                 f"Role ID {roleid} completed the task ID {taskid} and received as reward: gold = {gold}, exp = {exp}, sp = {sp}, reputation = {reputation}"
             )
-        return date_time, roleid, taskid, gold, exp, sp, reputation
+            return date_time, roleid, taskid, gold, exp, sp, reputation
 
     def process_mine(self, log_line: str, function: str):
         """
@@ -202,7 +202,7 @@ class LogHandler:
             print(
                 f"Role ID {roleid} mined and obtained {item_count} unit(s) of item ID {itemid}"
             )
-        return date_time, roleid, item_count, itemid
+            return date_time, roleid, item_count, itemid
 
     def process_craft_item(self, log_line: str, function: str):
         """
@@ -222,7 +222,7 @@ class LogHandler:
             print(
                 f"Role ID {roleid} crafted {item_count} unit(s) of item ID {itemid} at {date_time}"
             )
-        return date_time, roleid, item_count, itemid, recipe
+            return date_time, roleid, item_count, itemid, recipe
 
     def process_create_faction(self, log_line: str, function: str):
         """
@@ -238,7 +238,7 @@ class LogHandler:
             roleid = matches.group(2)
             factionid = matches.group(3)
             print(f"Role ID {roleid} created faction ID {factionid} at {date_time}")
-        return date_time, roleid, factionid
+            return date_time, roleid, factionid
 
     def process_upgrade_faction(self, log_line: str, function: str):
         """
@@ -258,7 +258,7 @@ class LogHandler:
             print(
                 f"Faction ID {factionid} was upgraded by the master role {roleid}. Money: {money}, Level: {level}"
             )
-        return date_time, factionid, roleid, money, level
+            return date_time, factionid, roleid, money, level
 
     def process_create_party(self, log_line: str, function: str):
         """
@@ -275,7 +275,7 @@ class LogHandler:
             partyid = matches.group(3)
             print(f"Role ID {roleid} created party ID {partyid} at {date_time}")
 
-        return date_time, roleid, partyid
+            return date_time, roleid, partyid
 
     def process_join_party(self, log_line: str, function: str):
         """
@@ -292,7 +292,7 @@ class LogHandler:
             partyid = matches.group(3)
             print(f"Role ID {roleid} joined party ID {partyid} at {date_time}")
 
-        return date_time, roleid, partyid
+            return date_time, roleid, partyid
 
     def process_leave_party(self, log_line: str, function: str):
         """
@@ -309,7 +309,7 @@ class LogHandler:
             partyid = matches.group(3)
             print(f"Role ID {roleid} left party ID {partyid} at {date_time}")
 
-        return date_time, roleid, partyid
+            return date_time, roleid, partyid
 
     def process_kill_person(self, log_line: str, function: str):
         """
@@ -326,7 +326,7 @@ class LogHandler:
             victim = matches.group(3)
             print(f"Role ID {killer} killed Role ID {victim} at {date_time}")
 
-        return date_time, killer, victim
+            return date_time, killer, victim
 
     def process_gshop_trade(self, log_line: str, function: str):
         """
@@ -349,7 +349,7 @@ class LogHandler:
                 f"Role ID {roleid} traded {item_count} unit(s) of item ID {itemid} for {price} at {date_time}, cash used: {cash_needed}, cash left: {cash_left}"
             )
 
-        return date_time, roleid, itemid, item_count, price, cash_needed, cash_left
+            return date_time, roleid, itemid, item_count, price, cash_needed, cash_left
 
     def process_drop_item(self, log_line: str, function: str):
         """
@@ -369,7 +369,7 @@ class LogHandler:
                 f"Role ID {roleid} dropped {item_count} item ID {itemid} at {date_time}"
             )
 
-        return date_time, roleid, item_count, itemid
+            return date_time, roleid, item_count, itemid
 
     def process_drop_equipment(self, log_line: str, function: str):
         """
@@ -384,9 +384,9 @@ class LogHandler:
             date_time = matches.group(1)
             roleid = matches.group(2)
             itemid = matches.group(3)
-        print(f"Role ID {roleid} dropped equipment ID {itemid} at {date_time}")
+            print(f"Role ID {roleid} dropped equipment ID {itemid} at {date_time}")
 
-        return date_time, roleid, itemid
+            return date_time, roleid, itemid
 
     def process_discard_money(self, log_line: str, function: str):
         """
@@ -403,7 +403,7 @@ class LogHandler:
             money = matches.group(3)
             print(f"Role ID {roleid} discarded {money} money at {date_time}")
 
-        return date_time, roleid, money
+            return date_time, roleid, money
 
     def process_sell_item(self, log_line: str, function: str):
         """
@@ -424,7 +424,7 @@ class LogHandler:
                 f"Role ID {roleid} sold {item_count} unit(s) of item ID {itemid} at {date_time}"
             )
 
-        return date_time, roleid, item_count, itemid
+            return date_time, roleid, item_count, itemid
 
     def process_receive_money(self, log_line: str, function: str):
         """
@@ -441,7 +441,7 @@ class LogHandler:
             money = matches.group(3)
             print(f"Role ID {roleid} received {money} money at {date_time}")
 
-        return date_time, roleid, money
+            return date_time, roleid, money
 
     def process_pick_item(self, log_line: str, function: str):
         """
@@ -461,7 +461,7 @@ class LogHandler:
                 f"Role ID {roleid} picked up {item_count} item ID {itemid} at {date_time}"
             )
 
-        return date_time, roleid, item_count, itemid
+            return date_time, roleid, item_count, itemid
 
     def process_level_up(self, log_line: str, function: str):
         """
@@ -482,7 +482,7 @@ class LogHandler:
                 f"Role ID {roleid} leveled up to {level} at {date_time} after playing for {playtime} minutes"
             )
 
-        return date_time, roleid, level, playtime
+            return date_time, roleid, level, playtime
 
     def process_spend_money(self, log_line: str, function: str):
         """
@@ -499,7 +499,7 @@ class LogHandler:
             money = matches.group(3)
             print(f"Role ID {roleid} spent {money} money at {date_time}")
 
-        return date_time, roleid, money
+            return date_time, roleid, money
 
     def process_spend_sp(self, log_line: str, function: str):
         """
@@ -516,7 +516,7 @@ class LogHandler:
             sp = matches.group(3)
             print(f"Role ID {roleid} spent {sp} SP at {date_time}")
 
-        return date_time, roleid, sp
+            return date_time, roleid, sp
 
     def process_upgrade_skill(self, log_line: str, function: str):
         """
@@ -536,7 +536,7 @@ class LogHandler:
                 f"Role ID {roleid} upgraded skill ID {skillid} to level {level} at {date_time}"
             )
 
-        return date_time, roleid, skillid, level
+            return date_time, roleid, skillid, level
 
     def process_egg_hatch(self, log_line: str, function: str):
         """
@@ -551,9 +551,9 @@ class LogHandler:
             date_time = matches.group(1)
             roleid = matches.group(2)
             eggid = matches.group(3)
-        print(f"Role ID {roleid} hatched egg ID {eggid} at {date_time}")
+            print(f"Role ID {roleid} hatched egg ID {eggid} at {date_time}")
 
-        return date_time, roleid, eggid
+            return date_time, roleid, eggid
 
     def process_trade(self, log_line: str, function: str):
         """
@@ -597,7 +597,7 @@ class LogHandler:
                 f"Role ID {roleid} added {item_count} unit(s) of item ID {itemid} to trade ID {trade_id} at {date_time}"
             )
 
-        return date_time, roleid, itemid, item_count, money, trade_id
+            return date_time, roleid, itemid, item_count, money, trade_id
 
     def process_trade_remove_itens(self, log_line: str, function: str):
         """
@@ -620,7 +620,7 @@ class LogHandler:
                 f"Role ID {roleid} removed {item_count} unit(s) of item ID {itemid} from trade ID {trade_id} at {date_time}"
             )
 
-        return date_time, roleid, itemid, item_count, money, trade_id
+            return date_time, roleid, itemid, item_count, money, trade_id
 
     def process_trade_submit(self, log_line: str, function: str):
         """
@@ -642,7 +642,7 @@ class LogHandler:
                 f"Role ID {roleid_a} submitted the trade with Role ID {roleid_b} at {date_time}"
             )
 
-        return date_time, role_id, roleid_a, roleid_b, trade_id
+            return date_time, role_id, roleid_a, roleid_b, trade_id
 
     def process_trade_save(self, log_line: str, function: str):
         """
@@ -662,7 +662,7 @@ class LogHandler:
                 f"Trade ID {trade_id} was saved by Role ID {roleid_a} and Role ID {roleid_b} at {date_time}"
             )
 
-        return date_time, trade_id, roleid_a, roleid_b
+            return date_time, trade_id, roleid_a, roleid_b
 
 
 if __name__ == "__main__":
