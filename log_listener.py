@@ -26,6 +26,9 @@ class LogHandler:
             log_line -- Log Line received by the log_listener.sh script
         """
         results = self.get_method(log_line)
+        if results:
+            self.write_to_file(results, "logs/log.txt")
+
         return results
 
     def get_method(self, log_line: str) -> Union[tuple[Any], None]:
@@ -45,6 +48,14 @@ class LogHandler:
                     return method(log_line, func_name)  # pylint: disable=not-callable
 
         return None
+
+    def write_to_file(self, results: tuple[Any], file_name: str):
+        """
+        This function is responsible for writing the results into a log file.
+        """        
+
+        with open(file_name, "a") as file:
+            file.write(f"{log_line}\n")
 
     def process_login(self, log_line: str, function: str):
         """
