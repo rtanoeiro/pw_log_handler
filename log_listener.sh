@@ -12,7 +12,7 @@ export PYTHONPATH="$base_folder"
 process_log_line() {
     local log_line="$1"
     if [ -f "$log_script" ]; then
-        python "$log_script" "$log_line" 2>>run.log
+        python3 "$log_script" "$log_line" 2>>run.log
     else
         echo "Error: $log_script not found." >&2
         exit 1
