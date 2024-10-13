@@ -2,7 +2,7 @@
 
 import re
 import sys
-from typing import Any
+from typing import Any, Union
 
 from config import LOG_PATTERNS, REGEX_PATTERNS
 
@@ -18,7 +18,7 @@ class LogHandler:
         self.log_patterns = LOG_PATTERNS
         self.regex_patterns = REGEX_PATTERNS
 
-    def process_log_line(self, log_line: str) -> tuple[Any] | None:
+    def process_log_line(self, log_line: str) -> Union[tuple[Any], None]:
         """
         This function gets the correct method to process the log line.
 
@@ -28,7 +28,7 @@ class LogHandler:
         results = self.get_method(log_line)
         return results
 
-    def get_method(self, log_line: str) -> tuple[Any] | None:
+    def get_method(self, log_line: str) -> Union[tuple[Any], None]:
         """
         This function gets the correct method based in the log_patterns dictionary.
         Each key in the dictionary contains the function name.
@@ -125,6 +125,7 @@ class LogHandler:
             date_time = matches.group(1)
             roleid = matches.group(2)
             taskid = matches.group(3)
+
         if "GiveUpTask" in log_line:
             print(f"Role ID {roleid} gave up task ID {taskid} at {date_time}")
             return date_time, roleid, taskid, "give_up"
