@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 pwlogger_pid=$(pidof -x log_listener.sh)
 
 if [ -n "$pwlogger_pid" ]; then

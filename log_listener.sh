@@ -27,6 +27,6 @@ read_log_file() {
 }
 
 # Read all log files in parallel
-# read_log_file "$log_file_chat" &
+read_log_file "$log_file_chat" &
 read_log_file "$log_file_format" &
-# read_log_file "$log_file" &
+read_log_file "$log_file" &

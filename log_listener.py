@@ -27,7 +27,7 @@ class LogHandler:
         """
         results = self.get_method(log_line)
         if results:
-            self.write_to_file(results, "logs/log.txt")
+            self.write_to_file(results, "logs/log.log")
 
         return results
 

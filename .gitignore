@@ -7,3 +7,6 @@ __pycache__/
 pwlogify/
 output/
 .vscode/
+upload_to_vps.sh
+.python-version
+pw_handler.tar.gz
