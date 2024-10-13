@@ -9,5 +9,5 @@ if [ -n "$pwlogger_pid" ]; then
 else
     echo "Starting pwlogger"
     cd $(dirname -- "$script_path")
-    nohup "$script_path" > /dev/null 2>&1 &
+    nohup "$script_path" > /dev/null 2> start_error.log &
 fi
