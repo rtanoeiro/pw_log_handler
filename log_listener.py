@@ -55,7 +55,7 @@ class LogHandler:
         """        
 
         with open(file_name, "a") as file:
-            file.write(f"{log_line}\n")
+            file.write(f"{results}\n")
 
     def process_login(self, log_line: str, function: str):
         """
