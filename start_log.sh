@@ -1,6 +1,6 @@
 #!/bin/bash
 
-script_path="/home/pwlogger/log_listener.sh"
+script_path="/home/pw_log_handler/log_listener.sh"
 
 pwlogger_pid=$(pidof -x $(basename -- "$script_path"))
 
