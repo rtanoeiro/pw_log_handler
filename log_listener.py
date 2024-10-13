@@ -30,6 +30,8 @@ class LogHandler:
         if results:
             print("Found some results!")
             self.write_to_file(results, "logs/log.log")
+        else:
+            print("No method found for this log line")
 
         return results
 
@@ -797,7 +799,7 @@ class LogHandler:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 1:
+    if len(sys.argv) > 1:
         log_handler = LogHandler()
         current_line = sys.argv[1]
         log_handler.process_log_line(log_line=current_line)

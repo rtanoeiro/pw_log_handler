@@ -24,7 +24,7 @@ else
     "$log_file_format" \
     "$log_file" \
     | while IFS= read -r log_line; do
-        echo "Processing: $log_line"
+        echo "Processing Raw bash: $log_line"
         process_log_line "$log_line"
     done
 fi
