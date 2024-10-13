@@ -11,7 +11,7 @@ export PYTHONPATH="$base_folder"
 
 process_log_line() {
     local log_line="$1"
-    python3 "$log_script" "$log_line" 2>>run.log
+    python3 "$log_script" "$log_line" 2>> logs/pw_log_handler.log
 }
 
 read_log_file() {
@@ -31,5 +31,5 @@ read_log_file() {
 
 # Read all log files in parallel
 # read_log_file "$log_file_chat" &
-# read_log_file "$log_file_format" &
+read_log_file "$log_file_format" &
 # read_log_file "$log_file" &
