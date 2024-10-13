@@ -1,32 +1,30 @@
 #!/bin/bash
 
-log_script="/home/pw_log_handler/log_listener.py"
-log_file_chat="/home/logs/world2.chat"
-log_file_format="/home/logs/world2.formatlog"
-log_file="/home/logs/world2.log"
+log_script="log_listener.py"
+log_file_chat="home/logs/world2.chat"
+log_file_format="home/logs/world2.formatlog"
+log_file="home/logs/world2.log"
 read_from_start="false"
+files="$log_file_chat $log_file_format $log_file"
 
 process_log_line() {
     local log_line="$1"
     python3 "$log_script" "$log_line" 2>> logs/pw_log_handler.log
 }
 
-read_log_file() {
-    local file="$1"
-    if [ "$read_from_start" = "true" ]; then
-        if [ -f "$file" ]; then
-            while read -r line; do
-                process_log_line "$line"
-            done < "$file"
-        fi
-    else
-        stdbuf -oL tail -f -n0 "$file" | while read -r line; do
-            process_log_line "$line"
-        done
+if [ "$read_from_start" = "true" ]; then
+    if [ -f "$files" ]; then
+        while read -r log_line; do
+            process_log_line "$log_line"
+        done <  "$files"
     fi
-}
-
-# Read all log files in parallel
-read_log_file "$log_file_chat" &
-read_log_file "$log_file_format" &
-read_log_file "$log_file" &
+else
+    stdbuf -oL tail -f -n0 \
+    "$log_file_chat" \
+    "$log_file_format" \
+    "$log_file" \
+    | while IFS= read -r log_line; do
+        echo "Processing: $log_line"
+        process_log_line "$log_line"
+    done
+fi
