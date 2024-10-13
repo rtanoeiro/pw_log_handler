@@ -1,7 +1,7 @@
 #!/bin/bash
 
 base_folder=$(pwd)
-log_script="'$pwd'/log_listener.py"
+log_script="$(pwd)log_listener.py"
 log_file_chat="/home/logs/world2.chat"
 log_file_format="/home/logs/world2.formatlog"
 log_file="/home/logs/world2.log"
