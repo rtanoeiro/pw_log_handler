@@ -25,8 +25,10 @@ class LogHandler:
         Arguments:
             log_line -- Log Line received by the log_listener.sh script
         """
+        print(f"Processing log line: {log_line}")
         results = self.get_method(log_line)
         if results:
+            print("Found some results!")
             self.write_to_file(results, "logs/log.log")
 
         return results
@@ -43,6 +45,7 @@ class LogHandler:
         """
         for pattern, func_name in self.log_patterns.items():
             if pattern in log_line:
+                print(f"Found pattern: {pattern} in log line {log_line}")
                 method = getattr(self, func_name, None)
                 if method:
                     return method(log_line, func_name)  # pylint: disable=not-callable
