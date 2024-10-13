@@ -1,7 +1,7 @@
 """This script is run to perform all tests from log lines"""
 
 import unittest
-from scripts.log_listener import LogHandler
+from log_listener import LogHandler
 
 
 class TestLogs(unittest.TestCase):
@@ -27,6 +27,10 @@ class TestLogs(unittest.TestCase):
         )
         self.craft_item = "2024-09-24 18:28:03 pwtestes.com gamed: info : 用户1104制造了5个11330, 配方1275, 消耗材料1823, 数量10; 材料1830, 数量15;"
         self.create_faction = "2024-10-06 03:10:54 pwtestes.com gamedbd: notice : formatlog:faction:type=create:roleid=1024:factionid=1"
+        self.join_faction = "2024-10-12 01:00:42 pwtestes.com gamedbd: notice : formatlog:faction:type=join:roleid=1088:factionid=1"
+        self.promote_role_in_faction = "2024-10-12 01:00:56 pwtestes.com gamedbd: notice : formatlog:faction:type=promote:superior=1024:roleid=1088:factionid=1:role=5"
+        self.leave_faction = "2024-10-12 01:01:07 pwtestes.com gamedbd: notice : formatlog:faction:type=leave:roleid=1024:factionid=1:role=6"
+        self.delete_faction = "2024-10-12 01:01:29 pwtestes.com gamedbd: notice : formatlog:faction:type=delete:factionid=1"
         self.upgrade_faction = "2024-10-06 03:11:10 pwtestes.com gamedbd: notice : formatlog:upgradefaction:factionid=1:master=1024:money=194154706:level=1"
         self.create_party = (
             "2024-09-27 15:46:15 pwtestes.com gamed: info : 用户1104建立了队伍(1104,0)"
@@ -67,6 +71,7 @@ class TestLogs(unittest.TestCase):
             "2024-09-24 18:56:58 pwtestes.com gamed: info : 用户1104孵化了宠物蛋31096"
         )
         self.add_trade_itens = "2024-10-11 06:35:02 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:tradeaddgoods: roleid=1088,goods is (id=8103,pos=15,count=1),money=0,tid=1"
+        self.remove_trade_itens = "2024-10-12 01:06:23 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:traderemovegoods: roleid=1024,item (id=5029,pos=25,count=1),money=0,tid=1"
         self.trade_submit = "2024-10-11 06:35:10 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:tradesubmit,rid=1088,A:1024,B:1088,retcode=76,tid=1"
         self.trade_save = "2024-10-11 06:35:16 pwtestes.com gdeliveryd: notice : formatlog:trade_debug:TradeSave:Trade done. tid=1,(Trader:1024,1088)"
         self.handler = LogHandler()
@@ -162,6 +167,46 @@ class TestLogs(unittest.TestCase):
         self.assertEqual(
             results, ("2024-10-06 03:11:10", "1", "1024", "194154706", "2")
         )
+
+    def test_join_faction(self):
+        """
+        Test if the join faction log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.join_faction)
+        self.assertEqual(results, ("2024-10-12 01:00:42", "1088", "1"))
+
+    def test_promote_role_in_faction(self):
+        """
+        Test if the promote role in faction log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.promote_role_in_faction)
+        self.assertEqual(
+            results, ("2024-10-12 01:00:56", "1024", "1088", "1", "5", "Capitão")
+        )
+
+    def test_get_new_role(self):
+        """
+        Test if the get new role log line is correctly processed
+        """
+        self.assertEqual(self.handler.get_role_name("2"), "Marechal")
+        self.assertEqual(self.handler.get_role_name("3"), "General")
+        self.assertEqual(self.handler.get_role_name("4"), "Major")
+        self.assertEqual(self.handler.get_role_name("5"), "Capitão")
+        self.assertEqual(self.handler.get_role_name("6"), "Membro")
+
+    def test_leave_faction(self):
+        """
+        Test if the leave faction log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.leave_faction)
+        self.assertEqual(results, ("2024-10-12 01:01:07", "1024", "1"))
+
+    def test_delete_faction(self):
+        """
+        Test if the delete faction log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.delete_faction)
+        self.assertEqual(results, ("2024-10-12 01:01:29", "1"))
 
     def test_create_party(self):
         """
@@ -285,6 +330,15 @@ class TestLogs(unittest.TestCase):
         results = self.handler.process_log_line(self.add_trade_itens)
         self.assertEqual(
             results, ("2024-10-11 06:35:02", "1088", "8103", "1", "0", "1")
+        )
+
+    def test_remove_trade_itens(self):
+        """
+        Test if the remove trade itens log line is correctly processed
+        """
+        results = self.handler.process_log_line(self.remove_trade_itens)
+        self.assertEqual(
+            results, ("2024-10-12 01:06:23", "1024", "5029", "1", "0", "1")
         )
 
     def test_trade_submit(self):
