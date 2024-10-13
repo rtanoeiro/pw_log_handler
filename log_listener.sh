@@ -1,17 +1,10 @@
 #!/bin/bash
 
-base_folder=$(pwd)
-log_script="$(pwd)log_listener.py"
+log_script="/home/pw_log_handler/log_listener.py"
 log_file_chat="/home/logs/world2.chat"
 log_file_format="/home/logs/world2.formatlog"
 log_file="/home/logs/world2.log"
 read_from_start="false"
-
-export PYTHONPATH="$base_folder"
-
-echo "This script is running inside $base_folder"
-echo ""
-echo ""
 
 process_log_line() {
     local log_line="$1"
