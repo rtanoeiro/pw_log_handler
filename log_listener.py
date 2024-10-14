@@ -800,8 +800,8 @@ class LogHandler:
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         log_handler = LogHandler()
-        current_line = sys.argv[1]
-        print(f"Processing log line: {current_line}")
+        current_line = sys.argv[1].encode("unicode_escape").decode("utf-8")
+        print(f"Processing Decoded UTF-8 log line: {current_line}")
         log_handler.process_log_line(log_line=current_line)
     else:
         print("Nothing done, no log line provided.")
