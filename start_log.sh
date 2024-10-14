@@ -1,6 +1,7 @@
 #!/bin/bash
 script_path="log_listener.sh"
 pwlogger_pid=$(pidof -x $(basename -- "$script_path"))
+
 if [ -n "$pwlogger_pid" ]; then
     echo "Logger is already running (PID: $pwlogger_pid)"
 else
