@@ -32,7 +32,7 @@ LOG_PATTERNS = {
     "孵化了宠物蛋": "process_egg_hatch",  # done
     "还原了宠物蛋": "processPetEggRestore",  # waiting for log line
     "组队拣起用户": "pickupTeamMoney",  # Waiting for log line
-    "\udcb5õ\udcbd\udcbe\udcad\udcd1\udce9": "process_exp_sp",  # done
+    "得到经验": "process_exp_sp",  # done
 }
 
 REGEX_PATTERNS = {
